@@ -1,1 +1,23 @@
-text: Hello world
+cards:
+  sword:
+    name: Sword
+    played:
+      fatigue: str + 3
+
+  shield:
+    name: Shield
+    played:
+      endure: dex + 3
+
+  penis:
+    name: Penis
+    played:
+      fatigue: dom + 3
+    climax:
+      soothe: dom + 3
+
+  anal:
+    name: Anal
+    played:
+      endure: sub + 3
+      reflect: sub + 3

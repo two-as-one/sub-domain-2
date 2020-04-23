@@ -63,11 +63,17 @@ An evolution of sub domain 1 (which was never finished)
 
 ## example combat
 
-card game?
-draw 5 cards each turn
-play 2 cards each turn
-enemy has intentions
-play cards to mitigate or amplify intentions
+### turn order
+
+1. upkeep
+2. draw 5 cards
+3. determine enemy intention
+4. play card 1
+5. play card 2
+6. resolve enemy intention
+7. discard hand
+
+### cards
 
 default deck:
 3 slash (sword)
@@ -82,14 +88,58 @@ female:
 1 anal
 1 boobies
 
-cards:
-sword: - deals str + 3 damage
-shield: - blocks dex + 3 damage
-boobies: - deals dom + sub + 3 damage
-penis: - deals dom + 3 damage - if fatal, restore 10 resolve
-anal: - block sub + 3 fuck damage - reflect damage blocked
-vaginal: - block sub + 3 fuck damage - reflect damage blocked
+### cards
 
-# goblin
+#### sword
+
+- fatigue: str + 3
+
+#### shield
+
+- endure: dex + 3
+
+#### boobies
+
+- fatigue: dom + sub + 3
+
+#### penis
+
+- fatigue: dom + 3
+- climax: soothe: dom + 3
+
+#### anal
+
+- endure: sub + 3
+- reflect: sub + 3
+
+#### vaginal
+
+- endure: sub + 3
+- soothe: 3
+
+#### lick
+
+- fatigue: sub + 3
+- boost: sub: 1
+
+#### flex
+
+- fatigue: str
+- boost: str: 1
+
+### key words
+
+climax: triggers if the opponent was reduced to 0 resolve during this turn
+soothe: restores an amount of resolve
+fatigue: reduces the opponent's resolve by an amount
+endure: gain temporary resolve until the end of the turn
+reflect: reflects an amount of fatigue back to the opponent until the end of the turn
+boost: improves one of your stats until the end of the encounter
+
+### enemies
+
+combat is usually vs 1 enemy, but could have more. most cards only affect the front enemy, though certain cards could affect multiples or target specific bak rows. The back enemy can't attack the player unless they have specific attacks to do so.
+
+#### goblin
 
 intentions - above 70% resolve - attack 5 - block 5 - above 50% - attack 5 - block 5 - fuck 5 - below 50% - fuck 5
