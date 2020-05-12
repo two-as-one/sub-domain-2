@@ -1,0 +1,37 @@
+@import "../tokens"
+
+html,
+body
+    background: $main-color-background
+    color: $main-color-foreground
+    font-family: monospace
+    margin: 0
+    padding: 0
+
+#game
+    display: flex
+    flex-direction: column
+    height: 100vh
+    box-sizing: border-box
+
+    #top,
+    #bottom
+        height: 50vh
+        display: flex
+        flex-direction: row
+
+    #top
+        .logger,
+        .window
+            width: 50vw
+
+    #bottom
+        .controls
+            width: 100vw
+
+    .logger,
+    .controls,
+    .window
+        margin: 8px
+        padding: 8px
+        border: 2px solid $main-color-foreground

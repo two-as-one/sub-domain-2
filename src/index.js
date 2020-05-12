@@ -1,12 +1,7 @@
 import "core-js/stable"
 import "regenerator-runtime/runtime"
+import { Game } from "./game/game"
 
-import "index.sass"
-import { html, render } from "lit-html"
-import config from "config.yaml"
-import { Game } from "./prorotype/game"
-
-const template = text => html` <div>${text}</div> `
-render(template(config.text), document.body)
-
-window.game = new Game()
+const game = new Game()
+window.game = game
+document.body.appendChild(game.el)

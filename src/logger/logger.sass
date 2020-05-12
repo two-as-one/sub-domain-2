@@ -1,21 +1,24 @@
+@import "../tokens"
+
 .logger
-    background-color: #111
-    color: #0f0
-    font-family: monospace
-    height: 50vh
-    overflow-y: scroll
+    background-color: $main-color-background
+    overflow-y: auto
 
     .logs,
     .options
+        margin: 0
         padding: 0
         list-style: none
-        padding: 16px
 
         .log
-            margin: 0 0 16px 0
+            margin: 16px 0 0 0
 
-    .option
-        cursor: pointer
-        padding: 4px 0
-        &:hover
-            color: #fff
+            &:first-child
+                margin-top: 0
+
+    &::-webkit-scrollbar
+        width: 16px
+
+    &::-webkit-scrollbar-thumb
+        border: 2px solid $main-color-background
+        background-color: $main-color-foreground
