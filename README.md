@@ -8,6 +8,7 @@ An evolution of sub domain 1 (which was never finished)
 - Encounters are a 'tug of war' to determine who is the sub and who is the dom
 - The game features transformations
   - transformations unlock new abilities or provide stat boosts
+- the game features encounters but no combat, everything is resolved by the power of love
 
 ## Goals
 
@@ -21,10 +22,6 @@ An evolution of sub domain 1 (which was never finished)
 - encounters should be balanced such that the player can complete multiple ones
 - player should have agency over all of their actions, with randomness sprinkled in to introduce an aspect of decision making
 
-## open questions
-
-- should orgasms be part of game mechanics at all?
-
 ## setting
 
 - a world of low magic but with high biodiversity
@@ -35,14 +32,21 @@ An evolution of sub domain 1 (which was never finished)
 ## mechanics
 
 - stats
-  - mind
-    - dominance
-    - submission
-  - body
-    - strength
-    - dexterity
+  - dominance
+  - submission
+  - resolve
 - HP is called 'resolve' and is a measure of both physical and mental, when it drops to 0, the player has to abandon their expedition and return to camp.
 - Winning an encounter (can) restore resolve
+
+- player's stats determined by cards in their deck?
+- cards can balance strong effects vs good stats
+- each deck is always 10 cards
+
+## progression
+
+- player can use consumable items to progress along a tree
+- certain branches of the tree are mutually exclusive (what if the player changes their mind?)
+- progressing along the tree can unlock new cards or change existing ones
 
 ## Game flow
 
@@ -61,6 +65,8 @@ An evolution of sub domain 1 (which was never finished)
 3. spoils!
 4. return to camp
 
+### possible
+
 ## example combat
 
 ### turn order
@@ -76,8 +82,7 @@ An evolution of sub domain 1 (which was never finished)
 ### cards
 
 default deck:
-3 slash (sword)
-3 block (shield)
+... ?
 
 male:
 2 penis
@@ -88,58 +93,24 @@ female:
 1 anal
 1 boobies
 
-### cards
-
-#### sword
-
-- fatigue: str + 3
-
-#### shield
-
-- endure: dex + 3
-
-#### boobies
-
-- fatigue: dom + sub + 3
-
-#### penis
-
-- fatigue: dom + 3
-- climax: soothe: dom + 3
-
-#### anal
-
-- endure: sub + 3
-- reflect: sub + 3
-
-#### vaginal
-
-- endure: sub + 3
-- soothe: 3
-
-#### lick
-
-- fatigue: sub + 3
-- boost: sub: 1
-
-#### flex
-
-- fatigue: str
-- boost: str: 1
-
 ### key words
 
 climax: triggers if the opponent was reduced to 0 resolve during this turn
 soothe: restores an amount of resolve
 fatigue: reduces the opponent's resolve by an amount
 endure: gain temporary resolve until the end of the turn
-reflect: reflects an amount of fatigue back to the opponent until the end of the turn
+satisfy: reflects an amount of fatigue back to the opponent until the end of the turn
 boost: improves one of your stats until the end of the encounter
 
 ### enemies
 
 combat is usually vs 1 enemy, but could have more. most cards only affect the front enemy, though certain cards could affect multiples or target specific bak rows. The back enemy can't attack the player unless they have specific attacks to do so.
 
-#### goblin
+### example enemy actions
 
-intentions - above 70% resolve - attack 5 - block 5 - above 50% - attack 5 - block 5 - fuck 5 - below 50% - fuck 5
+- penetrate (requires dom 5+)
+  - fatigue equal to dom
+- exert dominance
+  - dom +2
+- jerk off
+  - ???

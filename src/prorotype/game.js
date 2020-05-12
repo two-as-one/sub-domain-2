@@ -1,7 +1,12 @@
+import { html, render } from "lit-html"
+import { evaluate } from "mathjs"
 import Chance from "chance"
 const chance = new Chance()
 
 import config from "../config.yaml"
+import { Logger } from "../logger/logger"
+
+const logger = new Logger()
 
 class Card {
   constructor(game, name) {
@@ -21,8 +26,13 @@ class Card {
     return this.config.name
   }
 
-  __calc() {
-    return 1
+  __calc(formula) {
+    return evaluate(formula, {
+      str: this.game.player.strength,
+      dex: this.game.player.dexterity,
+      dom: this.game.player.dominance,
+      sub: this.game.player.submission,
+    })
   }
 
   __fatigue(amount) {
@@ -72,6 +82,10 @@ class Entity {
     this.__endure = 0
   }
 
+  upkeep() {
+    this.__endure = 0
+  }
+
   soothe(amount = 0) {
     this.__fatigue -= amount
 
@@ -83,8 +97,15 @@ class Entity {
   }
 
   fatigue(amount = 0) {
-    this.__fatigue += amount
     console.log(`fatigued ${this.name} for ${amount}`)
+    amount = this.__endure - amount
+
+    if (amount > 0) {
+      this.__endure = amount
+    } else {
+      this.__endure = 0
+      this.__fatigue -= amount
+    }
   }
 
   endure(amount = 0) {
@@ -173,13 +194,25 @@ class Intention {
       text += `inflict ${this.damage} damage`
     }
     if (this.block > 0) {
-      text += `blocking for ${this.block}`
+      text += `block for ${this.block}`
     }
     if (this.fuck > 0) {
       text += `give ${this.fuck} fucks`
     }
 
     return text || "do nothing"
+  }
+
+  resolve(game) {
+    if (this.damage > 0) {
+      game.player.fatigue(this.damage)
+    }
+    if (this.block > 0) {
+      game.opponent.endure(this.block)
+    }
+    if (this.fuck > 0) {
+      game.player.fatigue(this.fuck)
+    }
   }
 }
 
@@ -189,6 +222,10 @@ class Deck {
     this.__deck = []
     this.__hand = []
     this.__discard = cards
+  }
+
+  get hand() {
+    return this.__hand.slice()
   }
 
   playCard(card) {
@@ -204,6 +241,7 @@ class Deck {
   discardHand() {
     this.__discard.push(...this.__hand)
     this.__hand.length = 0
+    logger.clearOptions()
   }
 
   drawFromDeck() {
@@ -214,6 +252,7 @@ class Deck {
     const card = this.__deck.shift()
     this.__hand.push(card)
     console.log(`drew ${card.name}`)
+    logger.addOption(card.name, () => this.game.play(card))
   }
 
   shuffleDiscardIntoDeck() {
@@ -232,6 +271,14 @@ class Turn {
     this.game = game
   }
 
+  play(card) {
+    if (this.__current === 1) {
+      this.playCard1(card)
+    } else {
+      this.playCard2(card)
+    }
+  }
+
   _playCard(card) {
     console.log("playing", card.name)
     this.game.player.deck.playCard(card)
@@ -242,13 +289,14 @@ class Turn {
   }
   upkeep() {
     console.log("upkeep")
+    this.game.player.upkeep()
     // TODO: any upkeep
 
     this.drawHand()
   }
   drawHand() {
     console.log("drawing hand")
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 4; i++) {
       this.game.player.deck.drawFromDeck()
     }
 
@@ -257,15 +305,15 @@ class Turn {
   determineEnemyIntention() {
     console.log("determining intention")
     this.intention = this.game.opponent.getIntention()
-    console.log(
-      this.game.opponent.name,
-      "intends to",
-      this.intention.description,
+    logger.type(
+      `${this.game.opponent.name} intends to ${this.intention.description}`,
     )
 
     this.waitForCard1()
   }
   waitForCard1() {
+    this.__current = 1
+    this.game.render()
     console.log("waiting for card 1 ...")
   }
   playCard1(card) {
@@ -273,6 +321,8 @@ class Turn {
     this.waitForCard2()
   }
   waitForCard2() {
+    this.__current = 2
+    this.game.render()
     console.log("waiting for card 2 ...")
   }
   playCard2(card) {
@@ -281,10 +331,13 @@ class Turn {
   }
   resolveEnemyIntention() {
     console.log("resolving enemy intention")
+    this.game.opponent.upkeep()
+    this.intention.resolve(this.game)
     this.discardHand()
   }
   discardHand() {
     console.log("discarding hand")
+    this.game.player.deck.discardHand()
     this.end()
   }
   end() {
@@ -298,6 +351,9 @@ export class Game {
   constructor() {
     this.player = new Player(this)
     this.opponent = new Goblin(this)
+    this.el = document.createElement("div")
+    document.body.appendChild(this.el)
+    document.body.appendChild(logger.el)
     this.nextTurn()
   }
 
@@ -307,4 +363,28 @@ export class Game {
       this.turn.start()
     }
   }
+
+  play(card) {
+    this.turn.play(card)
+  }
+
+  render() {
+    render(turnTemplate(this), this.el)
+  }
 }
+
+const turnTemplate = game => html`
+  <section class="turn">
+    ${entityTemplate(game.player)} ${entityTemplate(game.opponent)}
+  </section>
+`
+
+const entityTemplate = entity => html`
+  <section class="entity">
+    <h1>${entity.name}</h1>
+    <ul>
+      <li>resolve: ${entity.hp} / ${entity.__hp}</li>
+      <li>enduring: ${entity.__endure}</li>
+    </ul>
+  </section>
+`
