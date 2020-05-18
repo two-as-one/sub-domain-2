@@ -3,35 +3,26 @@ import { Controls } from "../controls/controls"
 import { Window } from "../window/window"
 import { html, render } from "lit-html"
 import "./game.sass"
+import { Combat } from "../scenes/combat"
+import Chance from "chance"
 
 export class Game {
   constructor() {
     this.logger = new Logger(this)
     this.controls = new Controls(this)
     this.window = new Window(this)
+    this.chance = new Chance()
 
     this.render()
-    this.logger.type("hello world")
-    this.logger.type("hello world")
-    this.logger.type("hello world")
-    this.logger.type("hello world")
-    this.logger.type("hello world")
-    this.logger.type("hello world")
-    this.logger.type("hello world")
-    this.logger.type("hello world")
-    this.logger.type("hello world")
-    this.logger.type("hello world")
-    this.logger.type("hello world")
-    this.logger.type("hello world")
-    this.logger.type("hello world")
-    this.logger.type("hello world")
-    this.logger.type("hello world")
-    this.logger.type("hello world")
-    this.logger.type("hello world")
-    this.logger.type("hello world")
-    this.logger.type("hello world")
-    this.logger.type("hello world")
-    this.logger.type("hello world")
+    this.setScene()
+  }
+
+  setScene() {
+    if (this.scene) {
+      this.scene.unload()
+    }
+
+    this.scene = new Combat(this)
   }
 
   render() {

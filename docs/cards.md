@@ -25,15 +25,12 @@
 
 - avoid
   source: technique
-  top: block x1 damage
-  bottom: block x1 damage
+  block x1 damage
 
 - focus
   source: technique
-  top: double the damage of your next move
-  bottom: double the damage of your next move
+  double the damage of your next move
 
 - relax
   source: technique
-  top: heal x1 damage
-  bottom: heal x1 damage
+  heal x1 damage
