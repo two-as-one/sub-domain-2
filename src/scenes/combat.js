@@ -1,28 +1,37 @@
 import { Scene } from "./scene"
 import StateMachine from "javascript-state-machine"
-
-const CARDS = [
-  "card 1",
-  "card 2",
-  "card 3",
-  "card 4",
-  "card 5",
-  "card 6",
-  "card 7",
-  "card 8",
-  "card 9",
-  "card 10",
-]
+import { Raider } from "../entities/raider.entity"
+import { Deck } from "../deck/deck"
+import { CardSlap } from "../cards/slap.card"
 
 export class Combat extends Scene {
   constructor(game) {
     super(game)
+    this.player = game.player
+    this.enemy = new Raider(this.game)
+
+    this.stance = "combat"
+
+    this.deck = new Deck(
+      this.game,
+      new CardSlap(this.game),
+      new CardSlap(this.game),
+      new CardSlap(this.game),
+      new CardSlap(this.game),
+      new CardSlap(this.game),
+      new CardSlap(this.game),
+      new CardSlap(this.game),
+      new CardSlap(this.game),
+      new CardSlap(this.game),
+      new CardSlap(this.game),
+    )
+
     this._fsm()
   }
 
   onEnterIntro() {
-    this.game.logger.type("combat start")
-    this.game.controls.addOption(`let's go`, () => this.doUpkeep())
+    this.game.logger.type(`You've stumbled across a ${this.enemy.name}`)
+    this.game.controls.addOption(`It's go time`, () => this.doUpkeep())
   }
 
   onEnterUpkeep() {
@@ -30,7 +39,13 @@ export class Combat extends Scene {
     this.game.controls.clearOptions()
 
     this.__cardsPlayed = 0
-    this.__cards = this.game.chance.pick(CARDS, 4)
+
+    this.deck.hand.forEach(card => this.deck.discard(card))
+
+    this.deck.draw()
+    this.deck.draw()
+    this.deck.draw()
+    this.deck.draw()
 
     setTimeout(() => this.awaitCard(), 1000)
   }
@@ -38,16 +53,18 @@ export class Combat extends Scene {
   onEnterAwaitCard() {
     this.game.logger.type("choose a card")
     this.game.controls.clearOptions()
-    this.__cards.forEach(card =>
+    this.deck.hand.forEach(card =>
       this.game.controls.addOption(card, () => this.playCard(card)),
     )
   }
 
-  onEnterPlayCard(transition, name) {
-    this.game.logger.type(`playing ${name}`)
+  onEnterPlayCard(transition, card) {
+    this.game.logger.type(`playing ${card.title}`)
     this.game.controls.clearOptions()
     this.__cardsPlayed += 1
-    this.__cards.splice(this.__cards.indexOf(name), 1)
+
+    this.deck.discard(card)
+    card.play(this)
 
     if (this.__cardsPlayed >= 2) {
       setTimeout(() => this.doEnemy(), 1000)

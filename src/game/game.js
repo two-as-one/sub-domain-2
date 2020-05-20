@@ -5,6 +5,7 @@ import { html, render } from "lit-html"
 import "./game.sass"
 import { Combat } from "../scenes/combat"
 import Chance from "chance"
+import { Player } from "../entities/player.entity"
 
 export class Game {
   constructor() {
@@ -12,6 +13,7 @@ export class Game {
     this.controls = new Controls(this)
     this.window = new Window(this)
     this.chance = new Chance()
+    this.player = new Player(this)
 
     this.render()
     this.setScene()

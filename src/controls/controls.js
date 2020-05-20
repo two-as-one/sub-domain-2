@@ -9,8 +9,8 @@ export class Controls {
     this.el.classList.add("controls")
   }
 
-  addOption(text, handler) {
-    this.options.push(new Option(text, handler))
+  addOption(item, handler) {
+    this.options.push(new Option(item, handler))
     this.render()
   }
 
@@ -29,8 +29,8 @@ export class Controls {
 }
 
 class Option {
-  constructor(message, handler = () => {}) {
-    this.message = message
+  constructor(item, handler = () => {}) {
+    this.item = item
     this.handler = handler
   }
 }
@@ -40,7 +40,7 @@ const template = controls => html`
     ${controls.options.map(
       (option, i) =>
         html`<li class="option" @click="${() => controls.selectOption(i)}">
-          ${i + 1}. ${option.message}
+          ${i + 1}. ${option.item.template ? option.item.template : option.item}
         </li>`,
     )}
   </ul>
