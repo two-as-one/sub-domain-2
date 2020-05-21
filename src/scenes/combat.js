@@ -2,7 +2,14 @@ import { Scene } from "./scene"
 import StateMachine from "javascript-state-machine"
 import { Raider } from "../entities/raider.entity"
 import { Deck } from "../deck/deck"
-import { CardSlap } from "../cards/slap.card"
+import { Slap } from "../cards/slap.card"
+import { Avoid } from "../cards/avoid.card"
+import { Anus } from "../cards/anus.card"
+import { Cock } from "../cards/cock.card"
+import { Grope } from "../cards/grope.card"
+import { Kick } from "../cards/kick.card"
+import { Relax } from "../cards/relax.card"
+import { Option } from "../controls/controls"
 
 export class Combat extends Scene {
   constructor(game) {
@@ -10,28 +17,49 @@ export class Combat extends Scene {
     this.player = game.player
     this.enemy = new Raider(this.game)
 
-    this.stance = "combat"
+    this.__stance = "combat"
 
     this.deck = new Deck(
       this.game,
-      new CardSlap(this.game),
-      new CardSlap(this.game),
-      new CardSlap(this.game),
-      new CardSlap(this.game),
-      new CardSlap(this.game),
-      new CardSlap(this.game),
-      new CardSlap(this.game),
-      new CardSlap(this.game),
-      new CardSlap(this.game),
-      new CardSlap(this.game),
+      new Avoid(this.game),
+      new Avoid(this.game),
+      new Anus(this.game),
+      new Anus(this.game),
+      new Cock(this.game),
+      new Cock(this.game),
+      new Grope(this.game),
+      new Grope(this.game),
+      new Kick(this.game),
+      new Kick(this.game),
+      new Relax(this.game),
+      new Relax(this.game),
+      new Slap(this.game),
+      new Slap(this.game),
     )
 
     this._fsm()
   }
 
+  get stance() {
+    return this.__stance
+  }
+
+  set stance(val) {
+    if (val === "combat" && this.stance === "foreplay") {
+      this.__stance = "combat"
+    }
+
+    if (val === "foreplay" && this.stance === "combat") {
+      this.__stance = "foreplay"
+    }
+  }
+
   onEnterIntro() {
     this.game.logger.type(`You've stumbled across a ${this.enemy.name}`)
-    this.game.controls.addOption(`It's go time`, () => this.doUpkeep())
+    this.game.controls.setOptions(
+      "",
+      new Option(`It's go time`, () => this.doUpkeep()),
+    )
   }
 
   onEnterUpkeep() {
@@ -52,9 +80,11 @@ export class Combat extends Scene {
 
   onEnterAwaitCard() {
     this.game.logger.type("choose a card")
-    this.game.controls.clearOptions()
-    this.deck.hand.forEach(card =>
-      this.game.controls.addOption(card, () => this.playCard(card)),
+    this.game.controls.setOptions(
+      "cards",
+      ...this.deck.hand.map(
+        card => new Option(card, () => this.playCard(card)),
+      ),
     )
   }
 

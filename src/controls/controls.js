@@ -7,11 +7,7 @@ export class Controls {
     this.options = []
     this.el = document.createElement("section")
     this.el.classList.add("controls")
-  }
-
-  addOption(item, handler) {
-    this.options.push(new Option(item, handler))
-    this.render()
+    this.__type = ""
   }
 
   clearOptions() {
@@ -23,12 +19,29 @@ export class Controls {
     this.options[index].handler()
   }
 
+  set type(val) {
+    if (this.__type) {
+      this.el.classList.remove(this.__type)
+    }
+    if (val) {
+      this.el.classList.add(val)
+    }
+    this.__type = val
+  }
+
+  setOptions(type, ...options) {
+    this.type = type
+    this.clearOptions()
+    this.options.push(...options)
+    this.render()
+  }
+
   render() {
     render(template(this), this.el)
   }
 }
 
-class Option {
+export class Option {
   constructor(item, handler = () => {}) {
     this.item = item
     this.handler = handler
@@ -40,7 +53,7 @@ const template = controls => html`
     ${controls.options.map(
       (option, i) =>
         html`<li class="option" @click="${() => controls.selectOption(i)}">
-          ${i + 1}. ${option.item.template ? option.item.template : option.item}
+          ${option.item.template ? option.item.template : option.item}
         </li>`,
     )}
   </ul>

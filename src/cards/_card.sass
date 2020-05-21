@@ -1,0 +1,29 @@
+@import "../tokens"
+.card
+    border: 2px solid $main-color-foreground
+    font-size: $font-size-medium
+    width: 250px
+    height: 350px
+    display: flex
+    flex-direction: column
+
+    h1
+        margin: 0
+        padding: 8px 8px 8px 16px
+
+    > section
+        border: 2px dashed $main-color-foreground
+        margin: 8px
+        padding: 8px
+        flex-grow: 1
+
+        &.split
+            display: flex
+            flex-direction: column
+
+            > section
+                flex-grow: 1
+
+                &.top
+                    border-bottom: 2px dashed $main-color-foreground
+

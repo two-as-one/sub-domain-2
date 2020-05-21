@@ -1,11 +1,11 @@
 import { Card } from "./_card"
 
-export class Slap extends Card {
+export class Grope extends Card {
   constructor(game) {
     super(game, {
-      title: "Slap",
+      title: "Grope",
       top: {
-        damage: 6,
+        foreplay: true,
       },
       bottom: {
         damage: 3,

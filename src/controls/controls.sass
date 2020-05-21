@@ -1,9 +1,23 @@
 @import "../tokens"
 
 .controls
-    .option
-        cursor: pointer
-        padding: 4px 0
+    .options
+        display: flex
+        flex-direction: column
+        list-style: none
+        padding: 0
 
-        &:hover
-            color: #fff
+        .option
+            cursor: pointer
+            padding: 4px 0
+
+            &:hover
+                color: #fff
+
+    &.cards
+        .options
+            flex-direction: row
+
+            .option
+                margin: 0 8px
+

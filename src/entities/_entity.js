@@ -3,6 +3,7 @@ export class Entity {
     this.game = game
 
     this.__damage = 0
+    this.__block = 0
     this.maxHealth = 10
   }
 
@@ -15,6 +16,8 @@ export class Entity {
   }
 
   set health(val) {
+    val = Number(val) || 0
+
     if (val < 0) {
       val = 0
     }
@@ -26,17 +29,38 @@ export class Entity {
     this.__damage = this.maxHealth - val
   }
 
-  damage(val = 0) {
+  block(val = 0) {
+    val = Number(val) || 0
+
     if (val < 0) {
       val = 0
     }
-    this.health -= val
+
+    this.__block += val
+  }
+
+  damage(val = 0) {
+    val = Number(val) || 0
+
+    if (val < 0) {
+      val = 0
+    }
+
+    this.__block -= val
+
+    if (this.__block < 0) {
+      this.health += this.__block
+      this.__block = 0
+    }
   }
 
   heal(val = 0) {
+    val = Number(val) || 0
+
     if (val < 0) {
       val = 0
     }
+
     this.health += val
   }
 }
