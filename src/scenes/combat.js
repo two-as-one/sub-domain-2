@@ -106,6 +106,7 @@ export class Combat extends Scene {
   onEnterEnemyTurn() {
     this.game.logger.type(`enemy turn`)
     this.game.controls.clearOptions()
+    this.player.damage(3)
     setTimeout(() => this.doUpkeep(), 1000)
   }
 }
@@ -119,7 +120,7 @@ StateMachine.factory(Combat, {
     { name: "playCard", from: "awaitCard", to: "playCard" },
     { name: "doEnemy", from: "playCard", to: "enemyTurn" },
     { name: "end", from: ["upkeep", "playCard", "enemyTurn"], to: "end" },
-    { name: "win", from: "end", to: "vicory" },
+    { name: "win", from: "end", to: "victory" },
     { name: "lose", from: "end", to: "loss" },
   ],
 })
