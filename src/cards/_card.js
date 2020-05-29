@@ -5,101 +5,148 @@ export class Card {
   constructor(game, config) {
     this.game = game
     this.config = config
-
-    if (this.config.bottom && !this.config.top) {
-      throw Error("Card is missing top side")
-    }
-    if (this.config.top && !this.config.bottom) {
-      throw Error("Card is missing bottom side")
-    }
+    this.config.keywords = config.keywords || []
   }
 
   get title() {
     return this.config.title || "[NO_NAME]"
   }
 
-  get isSplit() {
-    return Boolean(this.config.top && this.config.bottom)
+  hasKeyword(word) {
+    return this.config.keywords.includes(word)
   }
 
-  describe(config) {
+  get nut() {
+    return this.config.nut || 0
+  }
+
+  get pain() {
+    let val = this.config.pain || 0
+
+    if (this.game.scene.stance === "combat") {
+      val *= 2
+    }
+
+    return val
+  }
+
+  get love() {
+    let val = this.config.love || 0
+
+    if (this.hasKeyword("penis")) {
+      val += this.game.player.nut
+    }
+
+    if (this.game.scene.stance === "foreplay") {
+      val *= 2
+    }
+
+    return val
+  }
+
+  get block() {
+    return this.config.block || 0
+  }
+
+  get heal() {
+    return this.config.heal || 0
+  }
+
+  describe() {
     const effects = []
 
-    if (config.damage) {
-      effects.push(`Deal [${config.damage}] damage.`)
+    if (this.nut) {
+      effects.push(`Nut ${this.nut}.`)
     }
 
-    if (config.block) {
-      effects.push(`Block [${config.block}].`)
+    if (this.pain) {
+      let val = this.pain
+
+      if (val === this.config.pain) {
+        effects.push(`Deal ${this.pain} pain.`)
+      } else {
+        effects.push(html`Deal <strong>${this.pain}</strong> pain.`)
+      }
     }
 
-    if (config.heal) {
-      effects.push(`Heal [${config.heal}].`)
+    if (this.love) {
+      let val = this.love
+
+      if (val === this.config.love) {
+        effects.push(`Deal ${this.love} love.`)
+      } else {
+        effects.push(html`Deal <strong>${this.love}</strong> love.`)
+      }
     }
 
-    if (config.combat) {
-      effects.push("Enter combat stance.")
+    if (this.block) {
+      effects.push(`Block ${this.block}.`)
     }
 
-    if (config.foreplay) {
-      effects.push("Enter foreplay stance.")
+    if (this.heal) {
+      effects.push(`Heal ${this.heal}.`)
     }
 
-    return effects.join()
+    if (this.config.combat) {
+      effects.push(`Enter combat stance.`)
+    }
+
+    if (this.config.foreplay) {
+      effects.push(`Enter foreplay stance.`)
+    }
+
+    return effects
   }
 
-  apply(scene, config) {
-    if (config.damage) {
-      scene.enemy.damage(config.damage)
+  apply(scene) {
+    if (this.nut) {
+      this.game.player.nut += this.nut
     }
 
-    if (config.heal) {
-      scene.player.heal(config.heal)
+    if (this.pain) {
+      scene.enemy.damage(this.pain, "pain")
     }
 
-    if (config.block) {
-      scene.player.block(config.block)
+    if (this.love) {
+      scene.enemy.damage(this.love, "love")
+
+      if (this.hasKeyword("penis")) {
+        this.game.player.nut = 0
+      }
     }
 
-    if (config.foreplay) {
+    if (this.heal) {
+      scene.player.heal(this.heal)
+    }
+
+    if (this.block) {
+      scene.player.block(this.block)
+    }
+
+    if (this.config.foreplay) {
       scene.stance = "foreplay"
     }
 
-    if (config.combat) {
+    if (this.config.combat) {
       scene.stance = "combat"
     }
   }
 
   play(scene) {
-    if (this.isSplit) {
-      if (scene.stance === "foreplay") {
-        this.apply(scene, this.config.bottom)
-      } else {
-        this.apply(scene, this.config.top)
-      }
-    } else {
-      this.apply(scene, this.config)
-    }
+    this.apply(scene)
   }
 
   get template() {
     return html`
       <div class="card">
         <h1 class="title">${this.title}</h1>
-        ${this.isSplit
-          ? html`<section class="split">
-              <section class="top">
-                <p>Combat: ${this.describe(this.config.top)}</p>
-              </section>
-              <section class="bottom">
-                <p>Foreplay: ${this.describe(this.config.bottom)}</p>
-              </section>
-            </section>`
-          : html`<section class="normal">
-              <section>
-                <p>${this.describe(this.config)}</p>
-              </section>
-            </section>`}
+        <section class="normal">
+          <section>
+            <ul>
+              ${this.describe().map(effect => html`<li>${effect}</li>`)}
+            </ul>
+          </section>
+        </section>
       </div>
     `
   }

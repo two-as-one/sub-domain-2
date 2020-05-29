@@ -4,12 +4,8 @@ export class Anus extends Card {
   constructor(game) {
     super(game, {
       title: "Anus",
-      top: {
-        damage: 3,
-      },
-      bottom: {
-        block: 6,
-      },
+      love: 2,
+      type: "body",
     })
   }
 }

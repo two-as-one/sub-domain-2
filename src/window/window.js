@@ -29,6 +29,9 @@ const debugEntity = entity => html`
     <h1>${entity.name}</h1>
     <ul>
       <li><label>hp:</label> ${entity.health} / ${entity.maxHealth}</li>
+      <li><label>pain:</label> ${entity.pain}</li>
+      <li><label>love:</label> ${entity.love}</li>
+      <li><label>nut:</label> ${entity.nut}</li>
       <li><label>block:</label> ${entity.__block}</li>
     </ul>
   </section>

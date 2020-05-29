@@ -4,12 +4,8 @@ export class Slap extends Card {
   constructor(game) {
     super(game, {
       title: "Slap",
-      top: {
-        damage: 6,
-      },
-      bottom: {
-        damage: 3,
-      },
+      pain: 2,
+      type: "skill",
     })
   }
 }

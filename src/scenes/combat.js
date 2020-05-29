@@ -3,13 +3,11 @@ import StateMachine from "javascript-state-machine"
 import { Raider } from "../entities/raider.entity"
 import { Deck } from "../deck/deck"
 import { Slap } from "../cards/slap.card"
-import { Avoid } from "../cards/avoid.card"
 import { Anus } from "../cards/anus.card"
 import { Cock } from "../cards/cock.card"
-import { Grope } from "../cards/grope.card"
 import { Kick } from "../cards/kick.card"
-import { Relax } from "../cards/relax.card"
 import { Option } from "../controls/controls"
+import { Nut } from "../cards/nut.card"
 
 export class Combat extends Scene {
   constructor(game) {
@@ -21,20 +19,14 @@ export class Combat extends Scene {
 
     this.deck = new Deck(
       this.game,
-      new Avoid(this.game),
-      new Avoid(this.game),
-      new Anus(this.game),
       new Anus(this.game),
       new Cock(this.game),
-      new Cock(this.game),
-      new Grope(this.game),
-      new Grope(this.game),
       new Kick(this.game),
       new Kick(this.game),
-      new Relax(this.game),
-      new Relax(this.game),
       new Slap(this.game),
       new Slap(this.game),
+      new Nut(this.game),
+      new Nut(this.game),
     )
 
     this._fsm()

@@ -4,12 +4,9 @@ export class Kick extends Card {
   constructor(game) {
     super(game, {
       title: "Kick",
-      top: {
-        damage: 3,
-      },
-      bottom: {
-        combat: true,
-      },
+      pain: 1,
+      combat: true,
+      type: "skill",
     })
   }
 }

@@ -4,7 +4,8 @@ export class Avoid extends Card {
   constructor(game) {
     super(game, {
       title: "Avoid",
-      block: 3,
+      block: 2,
+      type: "skill",
     })
   }
 }

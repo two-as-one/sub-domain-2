@@ -3,8 +3,11 @@ export class Entity {
     this.game = game
 
     this.__damage = 0
+    this.__pain = 0
+    this.__love = 0
     this.__block = 0
     this.maxHealth = 10
+    this.nut = 0
   }
 
   get name() {
@@ -13,6 +16,14 @@ export class Entity {
 
   get health() {
     return this.maxHealth - this.__damage
+  }
+
+  get pain() {
+    return this.__pain
+  }
+
+  get love() {
+    return this.__love
   }
 
   set health(val) {
@@ -39,7 +50,7 @@ export class Entity {
     this.__block += val
   }
 
-  damage(val = 0) {
+  damage(val = 0, type = "pain") {
     val = Number(val) || 0
 
     if (val < 0) {
@@ -50,6 +61,13 @@ export class Entity {
 
     if (this.__block < 0) {
       this.health += this.__block
+
+      if (type === "pain") {
+        this.__pain -= this.__block
+      } else {
+        this.__love -= this.__block
+      }
+
       this.__block = 0
     }
   }
