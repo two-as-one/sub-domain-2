@@ -3,7 +3,7 @@ import Typewriter from "cool-typewriter"
 import "./logger.sass"
 
 export class Logger {
-  constructor(game) {
+  constructor(/** @type import("./../game/game").Game*/ game) {
     this.game = game
     this.typewriter = new Typewriter()
     this.logs = []

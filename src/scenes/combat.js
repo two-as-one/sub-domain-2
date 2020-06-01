@@ -2,12 +2,10 @@ import { Scene } from "./scene"
 import StateMachine from "javascript-state-machine"
 import { Raider } from "../entities/raider.entity"
 import { Deck } from "../deck/deck"
-import { Slap } from "../cards/slap.card"
-import { Anus } from "../cards/anus.card"
-import { Cock } from "../cards/cock.card"
-import { Kick } from "../cards/kick.card"
+import { cardFactory } from "../cards/_factory"
 import { Option } from "../controls/controls"
-import { Nut } from "../cards/nut.card"
+import { state } from "../state/state"
+import { html } from "lit-html"
 
 export class Combat extends Scene {
   constructor(game) {
@@ -15,18 +13,11 @@ export class Combat extends Scene {
     this.player = game.player
     this.enemy = new Raider(this.game)
 
-    this.__stance = "combat"
+    this.__stance = "fight"
 
     this.deck = new Deck(
       this.game,
-      new Anus(this.game),
-      new Cock(this.game),
-      new Kick(this.game),
-      new Kick(this.game),
-      new Slap(this.game),
-      new Slap(this.game),
-      new Nut(this.game),
-      new Nut(this.game),
+      ...state.player.cards.map(config => cardFactory(this.game, config)),
     )
 
     this._fsm()
@@ -37,11 +28,11 @@ export class Combat extends Scene {
   }
 
   set stance(val) {
-    if (val === "combat" && this.stance === "foreplay") {
-      this.__stance = "combat"
+    if (val === "fight" && this.stance === "foreplay") {
+      this.__stance = "fight"
     }
 
-    if (val === "foreplay" && this.stance === "combat") {
+    if (val === "foreplay" && this.stance === "fight") {
       this.__stance = "foreplay"
     }
   }
@@ -55,7 +46,12 @@ export class Combat extends Scene {
   }
 
   onEnterUpkeep() {
-    this.game.logger.type("upkeep")
+    this.enemy.chooseIntention()
+    console.log(this.enemy.intention.effect.describe())
+    this.game.logger.type(
+      html`${this.enemy.name} intention:
+      ${this.enemy.intention.effect.describe()}`,
+    )
     this.game.controls.clearOptions()
 
     this.__cardsPlayed = 0
@@ -86,9 +82,11 @@ export class Combat extends Scene {
     this.__cardsPlayed += 1
 
     this.deck.discard(card)
-    card.play(this)
+    card.play(this.enemy)
 
-    if (this.__cardsPlayed >= 2) {
+    if (this.player.health <= 0 || this.enemy.health <= 0) {
+      setTimeout(() => this.end(), 1000)
+    } else if (this.__cardsPlayed >= 2) {
       setTimeout(() => this.doEnemy(), 1000)
     } else {
       setTimeout(() => this.awaitCard(), 1000)
@@ -98,8 +96,42 @@ export class Combat extends Scene {
   onEnterEnemyTurn() {
     this.game.logger.type(`enemy turn`)
     this.game.controls.clearOptions()
-    this.player.damage(3)
-    setTimeout(() => this.doUpkeep(), 1000)
+    this.enemy.intention.effect.apply(this.player)
+
+    if (this.player.health <= 0 || this.enemy.health <= 0) {
+      setTimeout(() => this.end(), 1000)
+    } else {
+      setTimeout(() => this.doUpkeep(), 1000)
+    }
+  }
+
+  onEnterEnd() {
+    if (this.player.health <= 0) {
+      setTimeout(() => this.lose(), 0)
+    } else {
+      setTimeout(() => this.win(), 0)
+    }
+  }
+
+  onEnterVictory() {
+    this.game.logger.type(`You won!`)
+    this.game.controls.setOptions(
+      "",
+      new Option(`Yay!`, () => this.game.endScene()),
+    )
+  }
+
+  onEnterDefeat() {
+    this.game.logger.type(`You lost!`)
+    this.game.controls.setOptions(
+      "",
+      new Option(`Awww…`, () => this.game.endScene()),
+    )
+  }
+
+  unload() {
+    this.player.postCombat()
+    this.game.save()
   }
 }
 
@@ -113,7 +145,7 @@ StateMachine.factory(Combat, {
     { name: "doEnemy", from: "playCard", to: "enemyTurn" },
     { name: "end", from: ["upkeep", "playCard", "enemyTurn"], to: "end" },
     { name: "win", from: "end", to: "victory" },
-    { name: "lose", from: "end", to: "loss" },
+    { name: "lose", from: "end", to: "defeat" },
   ],
 })
 

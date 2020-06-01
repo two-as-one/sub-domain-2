@@ -2,7 +2,7 @@ import { html, render } from "lit-html"
 import "./controls.sass"
 
 export class Controls {
-  constructor(game) {
+  constructor(/** @type import("./../game/game").Game*/ game) {
     this.game = game
     this.options = []
     this.el = document.createElement("section")

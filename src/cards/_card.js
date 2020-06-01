@@ -1,145 +1,86 @@
 import { html } from "lit-html"
 import "./_card.sass"
+import { PainEffect } from "../combat-effects/pain.effect"
+import { LoveEffect } from "../combat-effects/love.effect"
+import { LoveBlockEffect } from "../combat-effects/love-block.effect"
+import { PainBlockEffect } from "../combat-effects/pain-block.effect"
+import { SpunkEffect } from "../combat-effects/spunk.effect"
+import { FightEffect } from "../combat-effects/fight.effect"
+import { ForeplayEffect } from "../combat-effects/foreplay.effect"
 
 export class Card {
-  constructor(game, config) {
+  constructor(/** @type import("./../game/game").Game*/ game, config) {
     this.game = game
     this.config = config
-    this.config.keywords = config.keywords || []
+
+    this.effects = []
+
+    if (this.config.pain) {
+      this.effects.push(
+        new PainEffect(game, game.player, { value: this.config.pain }),
+      )
+    }
+
+    if (this.config.love) {
+      this.effects.push(
+        new LoveEffect(game, game.player, { value: this.config.love }),
+      )
+    }
+
+    if (this.config.loveBlock) {
+      this.effects.push(
+        new LoveBlockEffect(game, game.player, {
+          value: this.config.loveBlock,
+        }),
+      )
+    }
+
+    if (this.config.painBlock) {
+      this.effects.push(
+        new PainBlockEffect(game, game.player, {
+          value: this.config.painBlock,
+        }),
+      )
+    }
+
+    if (this.config.fight) {
+      this.effects.push(new FightEffect(game, game.player, {}))
+    }
+
+    if (this.config.foreplay) {
+      this.effects.push(new ForeplayEffect(game, game.player, {}))
+    }
+
+    if (this.config.spunk) {
+      this.effects.push(
+        new SpunkEffect(game, game.player, {
+          value: this.config.spunk,
+        }),
+      )
+    }
   }
 
   get title() {
     return this.config.title || "[NO_NAME]"
   }
 
-  hasKeyword(word) {
-    return this.config.keywords.includes(word)
-  }
-
-  get nut() {
-    return this.config.nut || 0
-  }
-
-  get pain() {
-    let val = this.config.pain || 0
-
-    if (this.game.scene.stance === "combat") {
-      val *= 2
-    }
-
-    return val
-  }
-
-  get love() {
-    let val = this.config.love || 0
-
-    if (this.hasKeyword("penis")) {
-      val += this.game.player.nut
-    }
-
-    if (this.game.scene.stance === "foreplay") {
-      val *= 2
-    }
-
-    return val
-  }
-
-  get block() {
-    return this.config.block || 0
-  }
-
-  get heal() {
-    return this.config.heal || 0
+  get type() {
+    return this.config.type || "body"
   }
 
   describe() {
-    const effects = []
-
-    if (this.nut) {
-      effects.push(`Nut ${this.nut}.`)
-    }
-
-    if (this.pain) {
-      let val = this.pain
-
-      if (val === this.config.pain) {
-        effects.push(`Deal ${this.pain} pain.`)
-      } else {
-        effects.push(html`Deal <strong>${this.pain}</strong> pain.`)
-      }
-    }
-
-    if (this.love) {
-      let val = this.love
-
-      if (val === this.config.love) {
-        effects.push(`Deal ${this.love} love.`)
-      } else {
-        effects.push(html`Deal <strong>${this.love}</strong> love.`)
-      }
-    }
-
-    if (this.block) {
-      effects.push(`Block ${this.block}.`)
-    }
-
-    if (this.heal) {
-      effects.push(`Heal ${this.heal}.`)
-    }
-
-    if (this.config.combat) {
-      effects.push(`Enter combat stance.`)
-    }
-
-    if (this.config.foreplay) {
-      effects.push(`Enter foreplay stance.`)
-    }
-
-    return effects
+    return this.effects.map(effect => effect.describe())
   }
 
-  apply(scene) {
-    if (this.nut) {
-      this.game.player.nut += this.nut
-    }
-
-    if (this.pain) {
-      scene.enemy.damage(this.pain, "pain")
-    }
-
-    if (this.love) {
-      scene.enemy.damage(this.love, "love")
-
-      if (this.hasKeyword("penis")) {
-        this.game.player.nut = 0
-      }
-    }
-
-    if (this.heal) {
-      scene.player.heal(this.heal)
-    }
-
-    if (this.block) {
-      scene.player.block(this.block)
-    }
-
-    if (this.config.foreplay) {
-      scene.stance = "foreplay"
-    }
-
-    if (this.config.combat) {
-      scene.stance = "combat"
-    }
-  }
-
-  play(scene) {
-    this.apply(scene)
+  play(target) {
+    this.effects.forEach(effect => effect.apply(target))
   }
 
   get template() {
     return html`
       <div class="card">
         <h1 class="title">${this.title}</h1>
+        <h2 class="source">${this.type}</h2>
         <section class="normal">
           <section>
             <ul>

@@ -1,11 +1,11 @@
 import { Card } from "./_card"
 
 export class Anus extends Card {
-  constructor(game) {
-    super(game, {
+  static get defaults() {
+    return {
       title: "Anus",
-      love: 2,
+      loveBlock: 2,
       type: "body",
-    })
+    }
   }
 }

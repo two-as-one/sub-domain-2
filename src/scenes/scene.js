@@ -1,5 +1,5 @@
 export class Scene {
-  constructor(game) {
+  constructor(/** @type import("./../game/game").Game*/ game) {
     this.game = game
   }
 }

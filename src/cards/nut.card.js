@@ -1,11 +1,11 @@
 import { Card } from "./_card"
 
 export class Nut extends Card {
-  constructor(game) {
-    super(game, {
+  static get defaults() {
+    return {
       title: "Nut",
-      nut: 2,
+      spunk: 2,
       type: "body",
-    })
+    }
   }
 }

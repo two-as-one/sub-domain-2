@@ -6,7 +6,7 @@ import "./game.sass"
 import { Combat } from "../scenes/combat"
 import Chance from "chance"
 import { Player } from "../entities/player.entity"
-
+import { save } from "../state/state"
 export class Game {
   constructor() {
     this.logger = new Logger(this)
@@ -14,6 +14,8 @@ export class Game {
     this.window = new Window(this)
     this.chance = new Chance()
     this.player = new Player(this)
+
+    Player.newPlayerDeck("fighter", "male")
 
     this.render()
     this.setScene()
@@ -24,7 +26,16 @@ export class Game {
       this.scene.unload()
     }
 
+    this.player.__damage = 0
     this.scene = new Combat(this)
+  }
+
+  endScene() {
+    this.setScene()
+  }
+
+  save() {
+    save()
   }
 
   render() {

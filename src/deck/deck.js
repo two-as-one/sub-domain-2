@@ -1,5 +1,8 @@
 export class Deck {
-  constructor(game, ...cards) {
+  constructor(
+    /** @type import("./../game/game").Game*/ game,
+    /** @type import("./../cards/_card").Card*/ ...cards
+  ) {
     this.game = game
 
     this.__library = [...cards]

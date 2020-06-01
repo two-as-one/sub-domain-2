@@ -1,11 +1,10 @@
 import { Card } from "./_card"
 
-export class Kick extends Card {
+export class Block extends Card {
   static get defaults() {
     return {
-      title: "Kick",
-      pain: 2,
-      fight: true,
+      title: "Block",
+      painBlock: 2,
       type: "skill",
     }
   }
