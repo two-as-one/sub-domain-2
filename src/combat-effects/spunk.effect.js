@@ -1,4 +1,5 @@
 import { Effect } from "./_effect"
+import tooltips from "./_tooltips.yaml"
 
 export class SpunkEffect extends Effect {
   get value() {
@@ -11,5 +12,9 @@ export class SpunkEffect extends Effect {
 
   apply() {
     this.source.spunk += this.value
+  }
+
+  get tooltips() {
+    return [tooltips.spunk, tooltips.consumedOnUse]
   }
 }

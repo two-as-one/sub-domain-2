@@ -25,6 +25,10 @@ Cards can come from a variety of sources
     - smoke bomb
     - heal potion
     - gold purse
+  - they could be deployable
+    - stick ~ +1 to pain for the rest of combat
+    - dildo ~ +1 to love for the rest of combat
+    - poison ~ deals 1 pain each turn
 
 ## relics?
 

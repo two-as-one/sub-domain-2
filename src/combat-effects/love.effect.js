@@ -1,5 +1,6 @@
 import { Effect } from "./_effect"
 import { html } from "lit-html"
+import tooltips from "./_tooltips.yaml"
 
 export class LoveEffect extends Effect {
   get value() {
@@ -27,5 +28,9 @@ export class LoveEffect extends Effect {
   apply(target) {
     target.damage(this.value, "love")
     this.source.spunk = 0
+  }
+
+  get tooltips() {
+    return [tooltips.foreplay]
   }
 }

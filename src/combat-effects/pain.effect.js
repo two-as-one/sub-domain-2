@@ -1,5 +1,6 @@
 import { Effect } from "./_effect"
 import { html } from "lit-html"
+import tooltips from "./_tooltips.yaml"
 
 export class PainEffect extends Effect {
   get value() {
@@ -22,5 +23,9 @@ export class PainEffect extends Effect {
 
   apply(target) {
     target.damage(this.value, "pain")
+  }
+
+  get tooltips() {
+    return [tooltips.fight]
   }
 }

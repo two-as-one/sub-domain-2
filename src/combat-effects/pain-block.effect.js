@@ -1,4 +1,5 @@
 import { Effect } from "./_effect"
+import tooltips from "./_tooltips.yaml"
 
 export class PainBlockEffect extends Effect {
   get value() {
@@ -11,5 +12,9 @@ export class PainBlockEffect extends Effect {
 
   apply() {
     this.source.block(this.value, "pain")
+  }
+
+  get tooltips() {
+    return [tooltips.painBlock, tooltips.turnDuration]
   }
 }

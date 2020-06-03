@@ -1,4 +1,5 @@
 import { Effect } from "./_effect"
+import tooltips from "./_tooltips.yaml"
 
 export class LoveBlockEffect extends Effect {
   get value() {
@@ -11,5 +12,9 @@ export class LoveBlockEffect extends Effect {
 
   apply() {
     this.source.block(this.value, "love")
+  }
+
+  get tooltips() {
+    return [tooltips.loveBlock, tooltips.turnDuration]
   }
 }

@@ -47,7 +47,6 @@ export class Combat extends Scene {
 
   onEnterUpkeep() {
     this.enemy.chooseIntention()
-    console.log(this.enemy.intention.effect.describe())
     this.game.logger.type(
       html`${this.enemy.name} intention:
       ${this.enemy.intention.effect.describe()}`,
@@ -77,7 +76,7 @@ export class Combat extends Scene {
   }
 
   onEnterPlayCard(transition, card) {
-    this.game.logger.type(`playing ${card.title}`)
+    this.game.logger.type(`playing ${card.title}`, { source: "player" })
     this.game.controls.clearOptions()
     this.__cardsPlayed += 1
 

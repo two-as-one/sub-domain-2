@@ -68,8 +68,14 @@ export class Card {
     return this.config.type || "body"
   }
 
-  describe() {
+  get descriptions() {
     return this.effects.map(effect => effect.describe())
+  }
+
+  get tooltips() {
+    return [
+      ...new Set(this.effects.map(effect => effect.tooltips).flat()),
+    ].filter(item => !!item)
   }
 
   play(target) {
@@ -81,13 +87,18 @@ export class Card {
       <div class="card">
         <h1 class="title">${this.title}</h1>
         <h2 class="source">${this.type}</h2>
-        <section class="normal">
+        <section class="description">
           <section>
             <ul>
-              ${this.describe().map(effect => html`<li>${effect}</li>`)}
+              ${this.descriptions.map(effect => html`<li>${effect}</li>`)}
             </ul>
           </section>
         </section>
+        ${this.tooltips.length > 0
+          ? html` <section class="tooltips">
+              ${this.tooltips.map(tooltip => html`<li>${tooltip}</li>`)}
+            </section>`
+          : ""}
       </div>
     `
   }

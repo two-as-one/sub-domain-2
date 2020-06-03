@@ -11,10 +11,10 @@ export class Logger {
     this.el.classList.add("logger")
   }
 
-  type(text) {
+  type(text, options) {
     this.typewriter.complete()
 
-    this.logs.push(new Log(text))
+    this.logs.push(new Log(text, options))
 
     while (this.logs.length > 100) {
       this.logs.shift()
@@ -38,10 +38,16 @@ class Log {
     this.message = message
     this.options = options
   }
+
+  get classList() {
+    return this.options.source
+  }
 }
 
 const template = logger => html`
   <ul class="logs">
-    ${logger.logs.map(log => html`<li class="log">${log.message}</li>`)}
+    ${logger.logs.map(
+      log => html`<li class="log ${log.classList}">${log.message}</li>`,
+    )}
   </ul>
 `

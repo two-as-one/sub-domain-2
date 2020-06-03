@@ -1,11 +1,17 @@
 @import "../tokens"
 .card
+    z-index: 1
+    $card-width: 250px
     border: 2px solid $main-color-foreground
     font-size: $font-size-medium
-    width: 250px
-    height: 350px
+    width: $card-width
+    height: $card-width
     display: flex
     flex-direction: column
+    position: relative
+    color: $main-color-foreground
+    transition: 0.1s transform linear
+    background-color: $main-color-background
 
     h1
         margin: 0
@@ -17,7 +23,7 @@
         font-size: .75rem
         padding: 8px 8px 8px 16px
 
-    > section
+    .description
         border: 2px dashed $main-color-foreground
         margin: 8px
         padding: 8px
@@ -27,4 +33,21 @@
             padding: 0
             list-style: none
 
+    .tooltips
+        display: none
+        pointer-events: none
+        width: 250px
+        position: absolute
+        top: 0
+        left: $card-width
+        background-color: $main-color-background
+        border: 2px dashed $main-color-foreground
+        margin: 0 8px
+        padding: 8px
+
+    &:hover
+        z-index: 2
+        transform: scale(1.1)
+        .tooltips
+            display: block
 

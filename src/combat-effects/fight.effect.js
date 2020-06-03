@@ -1,4 +1,5 @@
 import { Effect } from "./_effect"
+import tooltips from "./_tooltips.yaml"
 
 export class FightEffect extends Effect {
   describe() {
@@ -7,5 +8,9 @@ export class FightEffect extends Effect {
 
   apply() {
     this.game.scene.stance = "fight"
+  }
+
+  get tooltips() {
+    return [tooltips.fight]
   }
 }
