@@ -1,8 +1,7 @@
 import { Entity } from "./_entity"
-import { state } from "../state/state"
+import { define, set } from "../state/state"
 
-state.player = state.player || {}
-state.player.cards = state.player.cards || []
+define("player.cards", [])
 
 export class Player extends Entity {
   get name() {
@@ -10,11 +9,11 @@ export class Player extends Entity {
   }
 
   static newPlayerDeck(playerClass, playerGender) {
-    state.player.cards = []
+    const cards = []
 
     switch (playerClass) {
       case "fighter":
-        state.player.cards.push(
+        cards.push(
           { title: "Block" },
           { title: "Block" },
           { title: "Kick" },
@@ -22,16 +21,38 @@ export class Player extends Entity {
           { title: "Slap" },
           { title: "Slap" },
         )
+        break
+      case "lover":
+        cards.push(
+          { title: "Block" },
+          { title: "Block" },
+          { title: "Grope" },
+          { title: "Grope" },
+          { title: "Kiss" },
+          { title: "Kiss" },
+        )
+        break
     }
 
     switch (playerGender) {
       case "male":
-        state.player.cards.push(
+        cards.push(
           { title: "Anus" },
           { title: "Cock" },
           { title: "Nut" },
           { title: "Nut" },
         )
+        break
+      case "female":
+        cards.push(
+          { title: "Anus" },
+          { title: "Pussy" },
+          { title: "Boob" },
+          { title: "Boob" },
+        )
+        break
     }
+
+    set("player.cards", cards)
   }
 }

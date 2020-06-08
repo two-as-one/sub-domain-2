@@ -1,10 +1,10 @@
 import { Card } from "./_card"
 
-export class Cock extends Card {
+export class Testicle extends Card {
   static get defaults() {
     return {
-      title: "Cock",
-      love: 2,
+      title: "Nut",
+      spunk: 2,
       type: "body",
     }
   }

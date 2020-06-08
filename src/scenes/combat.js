@@ -4,7 +4,7 @@ import { Raider } from "../entities/raider.entity"
 import { Deck } from "../deck/deck"
 import { cardFactory } from "../cards/_factory"
 import { Option } from "../controls/controls"
-import { state } from "../state/state"
+import { get } from "../state/state"
 import { html } from "lit-html"
 
 export class Combat extends Scene {
@@ -17,7 +17,7 @@ export class Combat extends Scene {
 
     this.deck = new Deck(
       this.game,
-      ...state.player.cards.map(config => cardFactory(this.game, config)),
+      ...get("player.cards").map(config => cardFactory(this.game, config)),
     )
 
     this._fsm()

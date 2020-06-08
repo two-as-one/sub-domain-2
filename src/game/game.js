@@ -15,7 +15,10 @@ export class Game {
     this.chance = new Chance()
     this.player = new Player(this)
 
-    Player.newPlayerDeck("fighter", "male")
+    Player.newPlayerDeck(
+      this.chance.pickone(["fighter", "lover"]),
+      this.chance.pickone(["male", "female"]),
+    )
 
     this.render()
     this.setScene()

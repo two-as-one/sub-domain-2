@@ -1,13 +1,28 @@
 import { Anus } from "./anus.card"
 import { Block } from "./block.card"
-import { Cock } from "./cock.card"
+import { Breast } from "./breast.card"
 import { Grope } from "./grope.card"
 import { Kick } from "./kick.card"
-import { Nut } from "./nut.card"
+import { Kiss } from "./kiss.card"
+import { Penis } from "./Penis.card"
 import { Relax } from "./relax.card"
 import { Slap } from "./slap.card"
+import { Testicle } from "./testicle.card"
+import { Vagina } from "./vagina.card"
 
-const CARDS = [Anus, Block, Cock, Grope, Kick, Nut, Relax, Slap]
+const CARDS = [
+  Anus,
+  Block,
+  Breast,
+  Grope,
+  Kick,
+  Kiss,
+  Penis,
+  Relax,
+  Slap,
+  Testicle,
+  Vagina,
+]
 
 export const cardFactory = function (game, config = {}) {
   const Card = CARDS.find(Card => Card.defaults.title === config.title)
