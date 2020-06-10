@@ -4,11 +4,10 @@ An evolution of sub domain 1 (which was never finished)
 
 ## Concepts
 
-- An adult-themed mostly text-based adventure game
-- Encounters are a 'tug of war' to determine who is the sub and who is the dom
-- The game features transformations
-  - transformations unlock new abilities or provide stat boosts
-- the game features encounters but no combat, everything is resolved by the power of love
+- An adult-themed game
+- card-based 'combat'
+- 'combat' is a mixture between fighting and foreplay
+- rogue lite gameplay with mostly run-based progression but also some permanent progression (such as upgrading your start base)
 
 ## Goals
 
@@ -22,31 +21,13 @@ An evolution of sub domain 1 (which was never finished)
 - encounters should be balanced such that the player can complete multiple ones
 - player should have agency over all of their actions, with randomness sprinkled in to introduce an aspect of decision making
 
-## setting
+## Theme & setting
 
-- a world of low magic but with high biodiversity
+Set in a scifi universe, the player is stranded on a sandy planet and must go on expeditions to refuel their ship. The player will encounter NPC's that can come live in their ship. The player has a highly customizable body whose body parts can be changed, but their mind can also be upgraded with skill chips
+
+- scifi and technology with high biodiversity
 - has eldritch monsters and mild body horror
-- has more traditional monsters
 - magic is mostly biological, potions and transformations exists but fireball doesn't
-
-## mechanics
-
-- stats
-  - dominance
-  - submission
-  - resolve
-- HP is called 'resolve' and is a measure of both physical and mental, when it drops to 0, the player has to abandon their expedition and return to camp.
-- Winning an encounter (can) restore resolve
-
-- player's stats determined by cards in their deck?
-- cards can balance strong effects vs good stats
-- each deck is always 10 cards
-
-## progression
-
-- player can use consumable items to progress along a tree
-- certain branches of the tree are mutually exclusive (what if the player changes their mind?)
-- progressing along the tree can unlock new cards or change existing ones
 
 ## Game flow
 
@@ -64,53 +45,3 @@ An evolution of sub domain 1 (which was never finished)
    5. boss?
 3. spoils!
 4. return to camp
-
-### possible
-
-## example combat
-
-### turn order
-
-1. upkeep
-2. draw 5 cards
-3. determine enemy intention
-4. play card 1
-5. play card 2
-6. resolve enemy intention
-7. discard hand
-
-### cards
-
-default deck:
-... ?
-
-male:
-2 penis
-1 anal
-
-female:
-1 vagina
-1 anal
-1 boobies
-
-### key words
-
-climax: triggers if the opponent was reduced to 0 resolve during this turn
-soothe: restores an amount of resolve
-fatigue: reduces the opponent's resolve by an amount
-endure: gain temporary resolve until the end of the turn
-satisfy: reflects an amount of fatigue back to the opponent until the end of the turn
-boost: improves one of your stats until the end of the encounter
-
-### enemies
-
-combat is usually vs 1 enemy, but could have more. most cards only affect the front enemy, though certain cards could affect multiples or target specific bak rows. The back enemy can't attack the player unless they have specific attacks to do so.
-
-### example enemy actions
-
-- penetrate (requires dom 5+)
-  - fatigue equal to dom
-- exert dominance
-  - dom +2
-- jerk off
-  - ???

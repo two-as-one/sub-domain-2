@@ -1,5 +1,8 @@
 import { Entity } from "./_entity"
 
+/**
+ * Base class for AI-driven combat opponents
+ */
 export class EntityAI extends Entity {
   constructor(game) {
     super(game)

@@ -3,22 +3,23 @@
 Cards can come from a variety of sources
 
 - body part
-  - each card represents a body part
-  - each card has a progression tech tree that can be expanded during the play session
-    - grow
-    - shrink
-    - multiply (copy card)
-    - remove
-    - lactate (breasts)
-    - horse cock (penis)
-    - ...
-- technique
-  - these cards don't directly reflect body parts
-    - kick
-    - grope
-    - focus
-    - relax
-    - ...
+
+  - each card represents a body part on the player
+  - each card has a size progression
+    - small - average - large - huge
+    - card gets +1 to its effect for each level of progression
+  - cards can be duplicated
+  - cards can be removed
+
+- skill chips
+
+  - these card reflect techniques
+  - each card has a progression
+    - novice - intermediate - advanced - master
+    - card gets +1 to its effect for each level of progression
+  - cards can be duplicated
+  - cards can be removed
+
 - gear
   - these represent items the player has found
   - they could be consumable (lost on use)

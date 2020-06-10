@@ -1,4 +1,4 @@
-import { Scene } from "./scene"
+import { Scene } from "./_scene"
 import StateMachine from "javascript-state-machine"
 import { Raider } from "../entities/raider.entity"
 import { Deck } from "../deck/deck"
