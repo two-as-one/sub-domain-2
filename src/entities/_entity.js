@@ -7,7 +7,7 @@ export class Entity {
     this.__love = 0
     this.__block = 0
     this.__anticipation = 0
-    this.maxHealth = 10
+    this.maxHealth = 20
     this.spunk = 0
   }
 

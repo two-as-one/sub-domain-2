@@ -32,8 +32,8 @@ const debugEntity = entity => html`
       <li><label>pain:</label> ${entity.pain}</li>
       <li><label>love:</label> ${entity.love}</li>
       <li><label>spunk:</label> ${entity.spunk}</li>
-      <li><label>pain block:</label> ${entity.__block}</li>
-      <li><label>love block:</label> ${entity.__anticipation}</li>
+      <li><label>block:</label> ${entity.__block}</li>
+      <li><label>anticipation:</label> ${entity.__anticipation}</li>
     </ul>
   </section>
 `
