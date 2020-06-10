@@ -5,8 +5,8 @@ export class Entity {
     this.__damage = 0
     this.__pain = 0
     this.__love = 0
-    this.__painBlock = 0
-    this.__loveBlock = 0
+    this.__block = 0
+    this.__anticipation = 0
     this.maxHealth = 10
     this.spunk = 0
   }
@@ -49,9 +49,9 @@ export class Entity {
     }
 
     if (type === "pain") {
-      this.__painBlock += val
+      this.__block += val
     } else {
-      this.__loveBlock += val
+      this.__anticipation += val
     }
   }
 
@@ -63,18 +63,18 @@ export class Entity {
     }
 
     if (type === "pain") {
-      this.__painBlock -= val
-      if (this.__painBlock < 0) {
-        this.health += this.__painBlock
-        this.__pain -= this.__painBlock
-        this.__painBlock = 0
+      this.__block -= val
+      if (this.__block < 0) {
+        this.health += this.__block
+        this.__pain -= this.__block
+        this.__block = 0
       }
     } else {
-      this.__loveBlock -= val
-      if (this.__loveBlock < 0) {
-        this.health += this.__loveBlock
-        this.__love -= this.__loveBlock
-        this.__loveBlock = 0
+      this.__anticipation -= val
+      if (this.__anticipation < 0) {
+        this.health += this.__anticipation
+        this.__love -= this.__anticipation
+        this.__anticipation = 0
       }
     }
   }
@@ -96,8 +96,8 @@ export class Entity {
   postCombat() {
     this.__pain = 0
     this.__love = 0
-    this.__painBlock = 0
-    this.__loveBlock = 0
+    this.__block = 0
+    this.__anticipation = 0
     this.spunk = 0
   }
 }

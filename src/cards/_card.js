@@ -2,8 +2,8 @@ import { html } from "lit-html"
 import "./_card.sass"
 import { PainEffect } from "../combat-effects/pain.effect"
 import { LoveEffect } from "../combat-effects/love.effect"
-import { LoveBlockEffect } from "../combat-effects/love-block.effect"
-import { PainBlockEffect } from "../combat-effects/pain-block.effect"
+import { AnticipationEffect } from "../combat-effects/anticipation.effect"
+import { BlockEffect } from "../combat-effects/block.effect"
 import { SpunkEffect } from "../combat-effects/spunk.effect"
 import { FightEffect } from "../combat-effects/fight.effect"
 import { ForeplayEffect } from "../combat-effects/foreplay.effect"
@@ -27,18 +27,18 @@ export class Card {
       )
     }
 
-    if (this.config.loveBlock) {
+    if (this.config.anticipation) {
       this.effects.push(
-        new LoveBlockEffect(game, game.player, {
-          value: this.config.loveBlock,
+        new AnticipationEffect(game, game.player, {
+          value: this.config.anticipation,
         }),
       )
     }
 
-    if (this.config.painBlock) {
+    if (this.config.block) {
       this.effects.push(
-        new PainBlockEffect(game, game.player, {
-          value: this.config.painBlock,
+        new BlockEffect(game, game.player, {
+          value: this.config.block,
         }),
       )
     }

@@ -1,7 +1,7 @@
 fight: Pain dealt is doubled while fighting.
 foreplay: Love dealt is doubled while in foreplay.
-loveBlock: Negates an amount of incoming love.
-painBlock: Negates an amount of incoming pain.
+anticipation: Negates an amount of incoming love.
+block: Negates an amount of incoming pain.
 turnDuration: Lasts until the end of turn.
 spunk: Increases Love dealt.
 consumedOnUse: Consumed on use.

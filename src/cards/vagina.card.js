@@ -4,7 +4,7 @@ export class Vagina extends Card {
   static get defaults() {
     return {
       title: "Pussy",
-      loveBlock: 2,
+      anticipation: 2,
       type: "body",
     }
   }
