@@ -23,7 +23,9 @@ An evolution of sub domain 1 (which was never finished)
 
 ## Theme & setting
 
-Set in a scifi universe, the player is stranded on a sandy planet and must go on expeditions to refuel their ship. The player will encounter NPC's that can come live in their ship. The player has a highly customizable body whose body parts can be changed, but their mind can also be upgraded with skill chips
+Set in a scifi universe, the player is on a sandy planet has a ship that serves as their home base. The player will encounter NPC's that can come live in their ship. The player has a highly customizable body whose body parts can be changed, but their mind can also be upgraded with skill chips.
+
+Why is the player on this planet? Are they stranded? Why do they go on expeditions.
 
 - scifi and technology with high biodiversity
 - has eldritch monsters and mild body horror
