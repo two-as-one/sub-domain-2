@@ -1,58 +1,19 @@
 import { Entity } from "./_entity"
-import { define, set } from "../state/state"
+import { define, get } from "../state/state"
 
 define("player.cards", [])
+define("player.damage", 0)
+define("player.maxHealth", 20)
 
 export class Player extends Entity {
-  get name() {
-    return "Player"
+  constructor(...args) {
+    super(...args)
+
+    this.maxHealth = get("player.maxHealth")
+    this.__damage = get("player.damage")
   }
 
-  static newPlayerDeck(playerClass, playerGender) {
-    const cards = []
-
-    switch (playerClass) {
-      case "fighter":
-        cards.push(
-          { title: "Block" },
-          { title: "Block" },
-          { title: "Kick" },
-          { title: "Kick" },
-          { title: "Slap" },
-          { title: "Slap" },
-        )
-        break
-      case "lover":
-        cards.push(
-          { title: "Block" },
-          { title: "Block" },
-          { title: "Grope" },
-          { title: "Grope" },
-          { title: "Kiss" },
-          { title: "Kiss" },
-        )
-        break
-    }
-
-    switch (playerGender) {
-      case "male":
-        cards.push(
-          { title: "Anus" },
-          { title: "Cock" },
-          { title: "Nut" },
-          { title: "Nut" },
-        )
-        break
-      case "female":
-        cards.push(
-          { title: "Anus" },
-          { title: "Pussy" },
-          { title: "Boob" },
-          { title: "Boob" },
-        )
-        break
-    }
-
-    set("player.cards", cards)
+  get name() {
+    return "Player"
   }
 }

@@ -15,6 +15,6 @@ export class SpunkEffect extends Effect {
   }
 
   get tooltips() {
-    return [tooltips.spunk, tooltips.consumedOnUse]
+    return [tooltips.spunk, tooltips.useDuration, tooltips.useOnLove]
   }
 }

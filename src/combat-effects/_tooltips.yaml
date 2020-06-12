@@ -3,5 +3,6 @@ foreplay: Love dealt is doubled while in foreplay.
 anticipation: Negates an amount of incoming love.
 block: Negates an amount of incoming pain.
 turnDuration: Lasts until the end of turn.
+useDuration: Lasts until used.
 spunk: Increases Love dealt.
-consumedOnUse: Consumed on use.
+useOnLove: Used when dealing love.

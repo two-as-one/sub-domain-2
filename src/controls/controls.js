@@ -7,7 +7,6 @@ export class Controls {
     this.options = []
     this.el = document.createElement("section")
     this.el.classList.add("controls")
-    this.__type = ""
   }
 
   clearOptions() {
@@ -19,42 +18,67 @@ export class Controls {
     this.options[index].handler()
   }
 
-  set type(val) {
-    if (this.__type) {
-      this.el.classList.remove(this.__type)
-    }
-    if (val) {
-      this.el.classList.add(val)
-    }
-    this.__type = val
-  }
-
-  setOptions(type, ...options) {
-    this.type = type
+  setOptions(...options) {
     this.clearOptions()
     this.options.push(...options)
     this.render()
   }
 
+  get type() {
+    const types = this.options.map(option => option.type)
+    if (types.every(t => t === "card")) {
+      return "cards"
+    } else if (types.every(t => t === "text")) {
+      return "text"
+    } else {
+      return "mixed"
+    }
+  }
+
   render() {
-    render(template(this), this.el)
+    render(this.template(this), this.el)
+  }
+
+  get template() {
+    return () => html`
+      <ul class="options ${this.type}">
+        ${this.options.map(option => option.template)}
+      </ul>
+    `
   }
 }
 
-export class Option {
+class Option {
   constructor(item, handler = () => {}) {
     this.item = item
     this.handler = handler
   }
+
+  select() {
+    this.handler()
+  }
 }
 
-const template = controls => html`
-  <ul class="options">
-    ${controls.options.map(
-      (option, i) =>
-        html`<li class="option" @click="${() => controls.selectOption(i)}">
-          ${option.item.template ? option.item.template : option.item}
-        </li>`,
-    )}
-  </ul>
-`
+export class TextOption extends Option {
+  get type() {
+    return "text"
+  }
+
+  get template() {
+    return html`<li class="option" @click="${() => this.select()}">
+      ${this.item}
+    </li>`
+  }
+}
+
+export class CardOption extends Option {
+  get type() {
+    return "card"
+  }
+
+  get template() {
+    return html`<li class="option card" @click="${() => this.select()}">
+      ${this.item.template}
+    </li>`
+  }
+}

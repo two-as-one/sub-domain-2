@@ -22,7 +22,8 @@ export class Window {
 
 const template = game => html`
   <p><label>stance:</label> ${game.scene.stance}</p>
-  ${debugEntity(game.scene.player)} ${debugEntity(game.scene.enemy)}
+  ${debugEntity(game.player)}
+  ${game.scene.enemy ? debugEntity(game.scene.enemy) : ""}
 `
 const debugEntity = entity => html`
   <section class="debug-entity">

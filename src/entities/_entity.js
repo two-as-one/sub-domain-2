@@ -29,6 +29,7 @@ export class Entity {
 
   set health(val) {
     val = Number(val) || 0
+    val = Math.round(val)
 
     if (val < 0) {
       val = 0
@@ -43,6 +44,7 @@ export class Entity {
 
   block(val = 0, type = "pain") {
     val = Number(val) || 0
+    val = Math.round(val)
 
     if (val < 0) {
       val = 0
@@ -57,6 +59,7 @@ export class Entity {
 
   damage(val = 0, type = "pain") {
     val = Number(val) || 0
+    val = Math.round(val)
 
     if (val < 0) {
       val = 0
@@ -81,6 +84,7 @@ export class Entity {
 
   heal(val = 0) {
     val = Number(val) || 0
+    val = Math.round(val)
 
     if (val < 0) {
       val = 0

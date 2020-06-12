@@ -3,10 +3,15 @@ import { Controls } from "../controls/controls"
 import { Window } from "../window/window"
 import { html, render } from "lit-html"
 import "./game.sass"
-import { Combat } from "../scenes/combat"
 import Chance from "chance"
 import { Player } from "../entities/player.entity"
-import { save } from "../state/state"
+import { save, define, get, set } from "../state/state"
+import { Combat } from "../scenes/combat"
+import { Oasis } from "../scenes/oasis"
+import { Expedition } from "../scenes/expedition"
+import { CharacterCreation } from "../scenes/character-creation"
+
+define("game.state", "character-creation")
 export class Game {
   constructor() {
     this.logger = new Logger(this)
@@ -15,30 +20,32 @@ export class Game {
     this.chance = new Chance()
     this.player = new Player(this)
 
-    Player.newPlayerDeck(
-      this.chance.pickone(["fighter", "lover"]),
-      this.chance.pickone(["male", "female"]),
-    )
-
     this.render()
     this.setScene()
   }
 
-  setScene() {
+  setScene(name = get("game.state")) {
     if (this.scene) {
       this.scene.unload()
     }
 
-    this.player.__damage = 0
-    this.scene = new Combat(this)
-  }
-
-  endScene() {
-    this.setScene()
-  }
-
-  save() {
+    set("game.state", name)
     save()
+
+    switch (name) {
+      case "character-creation":
+        this.scene = new CharacterCreation(this)
+        break
+      case "combat":
+        this.scene = new Combat(this)
+        break
+      case "oasis":
+        this.scene = new Oasis(this)
+        break
+      case "expedition":
+        this.scene = new Expedition(this)
+        break
+    }
   }
 
   render() {

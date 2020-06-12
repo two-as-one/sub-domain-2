@@ -3,7 +3,7 @@ import StateMachine from "javascript-state-machine"
 import { Raider } from "../entities/raider.entity"
 import { Deck } from "../deck/deck"
 import { cardFactory } from "../cards/_factory"
-import { Option } from "../controls/controls"
+import { TextOption, CardOption } from "../controls/controls"
 import { get } from "../state/state"
 import { html } from "lit-html"
 
@@ -40,8 +40,7 @@ export class Combat extends Scene {
   onEnterIntro() {
     this.game.logger.type(`You've stumbled across a ${this.enemy.name}`)
     this.game.controls.setOptions(
-      "",
-      new Option(`It's go time`, () => this.doUpkeep()),
+      new TextOption(`It's go time`, () => this.doUpkeep()),
     )
   }
 
@@ -68,9 +67,8 @@ export class Combat extends Scene {
   onEnterAwaitCard() {
     this.game.logger.type("choose a card")
     this.game.controls.setOptions(
-      "cards",
       ...this.deck.hand.map(
-        card => new Option(card, () => this.playCard(card)),
+        card => new CardOption(card, () => this.playCard(card)),
       ),
     )
   }
@@ -115,22 +113,19 @@ export class Combat extends Scene {
   onEnterVictory() {
     this.game.logger.type(`You won!`)
     this.game.controls.setOptions(
-      "",
-      new Option(`Yay!`, () => this.game.endScene()),
+      new TextOption(`Yay!`, () => this.game.setScene("expedition")),
     )
   }
 
   onEnterDefeat() {
     this.game.logger.type(`You lost!`)
     this.game.controls.setOptions(
-      "",
-      new Option(`Awww…`, () => this.game.endScene()),
+      new TextOption(`Awww…`, () => this.game.setScene("expedition")),
     )
   }
 
   unload() {
     this.player.postCombat()
-    this.game.save()
   }
 }
 

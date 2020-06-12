@@ -84,22 +84,20 @@ export class Card {
 
   get template() {
     return html`
-      <div class="card">
-        <h1 class="title">${this.title}</h1>
-        <h2 class="source">${this.type}</h2>
-        <section class="description">
-          <section>
-            <ul>
-              ${this.descriptions.map(effect => html`<li>${effect}</li>`)}
-            </ul>
-          </section>
+      <h1 class="title">${this.title}</h1>
+      <h2 class="source">${this.type}</h2>
+      <section class="description">
+        <section>
+          <ul>
+            ${this.descriptions.map(effect => html`<li>${effect}</li>`)}
+          </ul>
         </section>
-        ${this.tooltips.length > 0
-          ? html` <section class="tooltips">
-              ${this.tooltips.map(tooltip => html`<li>${tooltip}</li>`)}
-            </section>`
-          : ""}
-      </div>
+      </section>
+      ${this.tooltips.length > 0
+        ? html` <section class="tooltips">
+            ${this.tooltips.map(tooltip => html`<li>${tooltip}</li>`)}
+          </section>`
+        : ""}
     `
   }
 }
