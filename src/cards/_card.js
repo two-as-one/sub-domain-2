@@ -84,20 +84,24 @@ export class Card {
 
   get template() {
     return html`
-      <h1 class="title">${this.title}</h1>
-      <h2 class="source">${this.type}</h2>
-      <section class="description">
-        <section>
-          <ul>
-            ${this.descriptions.map(effect => html`<li>${effect}</li>`)}
-          </ul>
-        </section>
+      <section class="card__component">
+        <h1 class="title">${this.title}</h1>
+        <fieldset class="description">
+          <legend class="source"><${this.type}></legend>
+          <section>
+            <ul>
+              ${this.descriptions.map(effect => html`<li>${effect}</li>`)}
+            </ul>
+          </section>
+        </fieldset>
+        ${
+          this.tooltips.length > 0
+            ? html` <section class="tooltips">
+                ${this.tooltips.map(tooltip => html`<li>${tooltip}</li>`)}
+              </section>`
+            : ""
+        }
       </section>
-      ${this.tooltips.length > 0
-        ? html` <section class="tooltips">
-            ${this.tooltips.map(tooltip => html`<li>${tooltip}</li>`)}
-          </section>`
-        : ""}
     `
   }
 }
