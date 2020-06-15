@@ -4,7 +4,7 @@ export class Block extends Card {
   static get defaults() {
     return {
       title: "Block",
-      block: 2,
+      block: 5,
       type: "skill",
     }
   }

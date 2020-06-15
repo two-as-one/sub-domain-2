@@ -4,7 +4,7 @@ export class Testicle extends Card {
   static get defaults() {
     return {
       title: "Nut",
-      spunk: 2,
+      love: 5,
       type: "body",
     }
   }

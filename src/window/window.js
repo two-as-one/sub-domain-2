@@ -30,7 +30,6 @@ const debugEntity = entity => html`
     <h1>${entity.name}</h1>
     <ul>
       <li><label>hp:</label> ${entity.health} / ${entity.maxHealth}</li>
-      <li><label>spunk:</label> ${entity.spunk}</li>
       <li><label>block:</label> ${entity.__block}</li>
       <li><label>anticipation:</label> ${entity.__anticipation}</li>
     </ul>

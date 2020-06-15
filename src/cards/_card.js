@@ -4,7 +4,6 @@ import { PainEffect } from "../combat-effects/pain.effect"
 import { LoveEffect } from "../combat-effects/love.effect"
 import { AnticipationEffect } from "../combat-effects/anticipation.effect"
 import { BlockEffect } from "../combat-effects/block.effect"
-import { SpunkEffect } from "../combat-effects/spunk.effect"
 import { FightEffect } from "../combat-effects/fight.effect"
 import { ForeplayEffect } from "../combat-effects/foreplay.effect"
 
@@ -49,14 +48,6 @@ export class Card {
 
     if (this.config.foreplay) {
       this.effects.push(new ForeplayEffect(game, game.player, {}))
-    }
-
-    if (this.config.spunk) {
-      this.effects.push(
-        new SpunkEffect(game, game.player, {
-          value: this.config.spunk,
-        }),
-      )
     }
   }
 

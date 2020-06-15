@@ -26,7 +26,7 @@ export class Ship extends Scene {
 
   resetPlayer() {
     set("player.damage", 0)
-    set("player.maxHealth", 20)
+    set("player.maxHealth", 100)
     this.game.player = new Player(this.game)
   }
 }

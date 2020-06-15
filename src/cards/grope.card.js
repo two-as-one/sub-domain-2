@@ -5,7 +5,7 @@ export class Grope extends Card {
     return {
       title: "Grope",
       foreplay: true,
-      love: 2,
+      love: 5,
       type: "skill",
     }
   }

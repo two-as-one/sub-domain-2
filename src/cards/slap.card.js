@@ -4,7 +4,7 @@ export class Slap extends Card {
   static get defaults() {
     return {
       title: "Slap",
-      pain: 2,
+      pain: 5,
       type: "skill",
     }
   }

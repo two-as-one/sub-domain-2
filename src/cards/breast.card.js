@@ -4,7 +4,7 @@ export class Breast extends Card {
   static get defaults() {
     return {
       title: "Boob",
-      love: 2,
+      love: 5,
       type: "body",
     }
   }

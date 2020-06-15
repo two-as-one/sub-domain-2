@@ -6,10 +6,6 @@ export class LoveEffect extends Effect {
   get value() {
     let val = this.config.value || 0
 
-    if (this.source.spunk > 0) {
-      val += this.source.spunk
-    }
-
     if (this.game.scene.stance === "foreplay") {
       val *= 2
     }
@@ -27,7 +23,6 @@ export class LoveEffect extends Effect {
 
   apply(target) {
     target.damage(this.value, "love")
-    this.source.spunk = 0
   }
 
   get tooltips() {
