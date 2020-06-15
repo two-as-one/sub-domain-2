@@ -25,9 +25,11 @@ strong
         flex-direction: row
 
     #top
-        .logger,
+        .logger
+            width: 40vw
+
         .window
-            width: 50vw
+            width: 60vw
 
     #bottom
         .controls
@@ -38,4 +40,7 @@ strong
     .window
         margin: 8px
         padding: 8px
+
+    .logger,
+    .window
         border: 2px solid $main-color-foreground

@@ -10,8 +10,9 @@ import { Combat } from "../scenes/combat"
 import { Oasis } from "../scenes/oasis"
 import { Expedition } from "../scenes/expedition"
 import { Identotron } from "../scenes/identotron"
+import { Ship } from "../scenes/ship"
 
-define("game.state", "expedition")
+define("game.state", "ship")
 export class Game {
   constructor() {
     this.logger = new Logger(this)
@@ -35,6 +36,9 @@ export class Game {
     switch (name) {
       case "identotron":
         this.scene = new Identotron(this)
+        break
+      case "ship":
+        this.scene = new Ship(this)
         break
       case "combat":
         this.scene = new Combat(this)

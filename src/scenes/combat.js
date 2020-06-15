@@ -34,8 +34,14 @@ export class Combat extends Scene {
 
   onEnterIntro() {
     this.game.logger.type(`You've stumbled across a ${this.enemy.name}`)
-    this.game.controls.setOptions(
-      new TextOption(`It's go time`, () => this.doUpkeep()),
+    this.game.controls.clearOptions()
+
+    setTimeout(
+      () =>
+        this.game.controls.setOptions(
+          new TextOption(`It's go time`, () => this.doUpkeep()),
+        ),
+      1000,
     )
   }
 

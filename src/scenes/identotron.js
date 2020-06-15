@@ -1,7 +1,7 @@
 import { Scene } from "./_scene"
 import StateMachine from "javascript-state-machine"
 import { TextOption } from "../controls/controls"
-import { set } from "../state/state"
+import { set, get } from "../state/state"
 
 export class Identotron extends Scene {
   constructor(game) {
@@ -9,26 +9,32 @@ export class Identotron extends Scene {
     this._fsm()
   }
 
-  onEnterIntro() {
-    this.game.logger.type(
-      "Welcome to the IDENTOTRON-3000. How may I be of assistance?",
-    )
+  onEnterIntro(transition) {
+    if (transition.from === "none") {
+      this.game.logger.type(
+        "Welcome to the IDENTOTRON-3000. How may I be of assistance?",
+      )
+    } else {
+      this.game.logger.type("Is there anything else I can help you with?")
+    }
+
     this.game.controls.setOptions(
-      new TextOption("Change my gender.", () => this.changeGender()),
-      new TextOption("Install different class chip.", () => this.changeClass()),
+      new TextOption("Adjust my gender.", () => this.changeGender()),
+      new TextOption("Swap my class chip.", () => this.changeClass()),
       new TextOption("leave…", () => this.leave()),
     )
   }
 
   onEnterGenderSelection() {
-    this.game.logger.type("Please select your gender.")
+    this.game.logger.type(
+      `Please select your gender. You are currently a ${get("player.gender")}.`,
+    )
     this.game.controls.setOptions(
-      ...this.game.chance.shuffle([
-        new TextOption("Man", () => this.chooseGender("man")),
-        new TextOption("Woman", () => this.chooseGender("woman")),
-        new TextOption("Transman", () => this.chooseGender("transman")),
-        new TextOption("Transwoman", () => this.chooseGender("transwoman")),
-      ]),
+      new TextOption("Man", () => this.chooseGender("man")),
+      new TextOption("Woman", () => this.chooseGender("woman")),
+      new TextOption("Transman", () => this.chooseGender("transman")),
+      new TextOption("Transwoman", () => this.chooseGender("transwoman")),
+      new TextOption("Never mind…", () => this.start()),
     )
   }
 
@@ -41,12 +47,13 @@ export class Identotron extends Scene {
   }
 
   onEnterClassSelection() {
-    this.game.logger.type("Please select your class.")
+    this.game.logger.type(
+      `Please select your class. You are currently a  ${get("player.class")}.`,
+    )
     this.game.controls.setOptions(
-      ...this.game.chance.shuffle([
-        new TextOption("Fighter", () => this.chooseClass("fighter")),
-        new TextOption("Lover", () => this.chooseClass("lover")),
-      ]),
+      new TextOption("Fighter", () => this.chooseClass("fighter")),
+      new TextOption("Lover", () => this.chooseClass("lover")),
+      new TextOption("Never mind…", () => this.start()),
     )
   }
 
@@ -58,7 +65,7 @@ export class Identotron extends Scene {
   }
 
   onEnterOutro() {
-    setTimeout(() => this.game.setScene("expedition"), 0)
+    setTimeout(() => this.game.setScene("ship"), 0)
   }
 }
 
@@ -67,7 +74,13 @@ StateMachine.factory(Identotron, {
   transitions: [
     {
       name: "start",
-      from: ["none", "genderSelected", "classSelected"],
+      from: [
+        "none",
+        "genderSelection",
+        "genderSelected",
+        "classSelection",
+        "classSelected",
+      ],
       to: "intro",
     },
     { name: "changeGender", from: "intro", to: "genderSelection" },

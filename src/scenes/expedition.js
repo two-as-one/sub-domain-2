@@ -9,18 +9,31 @@ export class Expedition extends Scene {
   }
 
   onEnterIntro() {
-    this.game.logger.type("Choose where to go")
-    this.game.controls.setOptions(
-      new TextOption("Combat", () => this.game.setScene("combat")),
-      new TextOption("Oasis", () => this.game.setScene("oasis")),
-      new TextOption("Identotron-3000", () => this.game.setScene("identotron")),
-    )
+    if (this.game.player.health <= 0) {
+      setTimeout(() => this.abandon(), 0)
+    } else {
+      this.game.logger.type("Choose where to go next")
+      this.game.controls.setOptions(
+        new TextOption("Combat", () => this.game.setScene("combat")),
+        new TextOption("Oasis", () => this.game.setScene("oasis")),
+        new TextOption("Abandon expedition", () => this.abandon()),
+      )
+    }
+  }
+
+  onEnterDefeat() {
+    this.game.logger.type("You head back to your ship.")
+    this.game.controls.clearOptions()
+    setTimeout(() => this.game.setScene("ship"), 2000)
   }
 }
 
 StateMachine.factory(Expedition, {
   init: "intro",
-  transitions: [{ name: "start", from: "none", to: "intro" }],
+  transitions: [
+    { name: "start", from: "none", to: "intro" },
+    { name: "abandon", from: "intro", to: "defeat" },
+  ],
 })
 
 // To visualize this state machine:

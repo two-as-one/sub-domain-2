@@ -1,6 +1,5 @@
 @import "../tokens"
 .card__component
-    z-index: 1
     $card-width: 200px
     border: 2px solid $main-color-foreground
     font-size: $font-size-medium
@@ -10,7 +9,6 @@
     flex-direction: column
     position: relative
     color: $main-color-foreground
-    transition: 0.1s transform linear
     background-color: $main-color-background
     border-radius: 6px
     box-shadow: 0 0 2px 4px $main-color-background
@@ -59,8 +57,6 @@
             border-top: 1px solid $main-color-foreground
 
     &:hover
-        z-index: 2
-        transform: scale(1.1)
         .tooltips
             display: block
 

@@ -1,6 +1,8 @@
 @import "../tokens"
 
 .controls
+    overflow: hidden
+
     .options
         display: flex
         flex-direction: column
@@ -15,9 +17,20 @@
 
         &.cards
             flex-direction: row
+            justify-content: center
+            align-items: center
             list-style: none
             padding: 0
 
             .option
+                position: relative
                 margin: 0 -24px 0 8px
+                transition: 0.1s transform linear, 0.1s top linear
+                top: 0
+                z-index: 1
+
+                &:hover
+                    z-index: 2
+                    transform: scale(1.1)
+                    top: -8px
 
