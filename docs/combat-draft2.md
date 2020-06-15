@@ -12,3 +12,7 @@
 - block X
 - switch stance
 - combination of the above
+
+## ideas
+
+- player & enemy can 'consume spunk'
