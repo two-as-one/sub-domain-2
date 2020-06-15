@@ -4,7 +4,7 @@ export class Kiss extends Card {
   static get defaults() {
     return {
       title: "Kiss",
-      love: 5,
+      love: 3,
       type: "skill",
     }
   }

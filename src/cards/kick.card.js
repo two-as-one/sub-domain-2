@@ -4,7 +4,7 @@ export class Kick extends Card {
   static get defaults() {
     return {
       title: "Kick",
-      pain: 5,
+      pain: 2,
       fight: true,
       type: "skill",
     }

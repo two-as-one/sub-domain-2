@@ -4,7 +4,7 @@ import { Deck } from "../deck/deck"
 import { cardFactory } from "../cards/_factory"
 
 define("player.damage", 0)
-define("player.maxHealth", 100)
+define("player.maxHealth", 60)
 define("player.gender", "man")
 define("player.class", "fighter")
 

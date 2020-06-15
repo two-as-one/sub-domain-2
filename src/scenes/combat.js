@@ -54,6 +54,8 @@ export class Combat extends Scene {
     this.game.controls.clearOptions()
 
     this.__actionPoints = 2
+    this.player.__block = 0
+    this.player.__anticipation = 0
 
     this.deck.hand.forEach(card => this.deck.discard(card))
 
@@ -94,6 +96,10 @@ export class Combat extends Scene {
   onEnterEnemyTurn() {
     this.game.logger.type(`enemy turn`)
     this.game.controls.clearOptions()
+
+    this.enemy.__block = 0
+    this.enemy.__anticipation = 0
+
     this.enemy.intention.effect.apply(this.player)
 
     if (this.player.health <= 0 || this.enemy.health <= 0) {

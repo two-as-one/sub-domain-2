@@ -4,7 +4,7 @@ export class Anus extends Card {
   static get defaults() {
     return {
       title: "Anus",
-      anticipation: 5,
+      anticipation: 4,
       type: "body",
     }
   }

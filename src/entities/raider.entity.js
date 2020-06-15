@@ -5,6 +5,11 @@ import { FightEffect } from "../combat-effects/fight.effect"
 import { ForeplayEffect } from "../combat-effects/foreplay.effect"
 
 export class Raider extends EntityAI {
+  constructor(...args) {
+    super(...args)
+
+    this.maxHealth = 30
+  }
   get name() {
     return "Raider"
   }
@@ -12,13 +17,13 @@ export class Raider extends EntityAI {
   get intentions() {
     return [
       {
-        effect: new PainEffect(this.game, this, { value: 1 }),
+        effect: new PainEffect(this.game, this, { value: 3 }),
         applies: () => {
           return this.love <= this.pain
         },
       },
       {
-        effect: new LoveEffect(this.game, this, { value: 1 }),
+        effect: new LoveEffect(this.game, this, { value: 3 }),
         applies: () => {
           return this.love > this.pain
         },

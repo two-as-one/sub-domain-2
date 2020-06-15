@@ -4,7 +4,7 @@ export class Relax extends Card {
   static get defaults() {
     return {
       title: "Relax",
-      heal: 5,
+      heal: 3,
       type: "skill",
     }
   }
