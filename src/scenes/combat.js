@@ -11,6 +11,7 @@ export class Combat extends Scene {
     this.enemy = new Raider(this.game)
 
     this.__stance = "fight"
+    this.__actionPoints = 2
 
     this.deck = this.player.createNewDeck()
 
@@ -46,7 +47,7 @@ export class Combat extends Scene {
     )
     this.game.controls.clearOptions()
 
-    this.__cardsPlayed = 0
+    this.__actionPoints = 2
 
     this.deck.hand.forEach(card => this.deck.discard(card))
 
@@ -70,17 +71,17 @@ export class Combat extends Scene {
   onEnterPlayCard(transition, card) {
     this.game.logger.type(`playing ${card.title}`, { source: "player" })
     this.game.controls.clearOptions()
-    this.__cardsPlayed += 1
+    this.__actionPoints -= 1
 
     this.deck.discard(card)
     card.play(this.enemy)
 
     if (this.player.health <= 0 || this.enemy.health <= 0) {
       setTimeout(() => this.end(), 1000)
-    } else if (this.__cardsPlayed >= 2) {
-      setTimeout(() => this.doEnemy(), 1000)
-    } else {
+    } else if (this.__actionPoints > 0) {
       setTimeout(() => this.awaitCard(), 1000)
+    } else {
+      setTimeout(() => this.doEnemy(), 1000)
     }
   }
 
