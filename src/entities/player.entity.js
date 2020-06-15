@@ -5,7 +5,7 @@ import { cardFactory } from "../cards/_factory"
 
 define("player.damage", 0)
 define("player.maxHealth", 20)
-define("player.gender", "male")
+define("player.gender", "man")
 define("player.class", "fighter")
 
 export class Player extends Entity {
