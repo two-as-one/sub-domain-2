@@ -11,8 +11,9 @@ export class Expedition extends Scene {
   onEnterIntro() {
     this.game.logger.type("Choose where to go")
     this.game.controls.setOptions(
-      new TextOption(`Combat`, () => this.game.setScene("combat")),
-      new TextOption(`Oasis`, () => this.game.setScene("oasis")),
+      new TextOption("Combat", () => this.game.setScene("combat")),
+      new TextOption("Oasis", () => this.game.setScene("oasis")),
+      new TextOption("Identotron-3000", () => this.game.setScene("identotron")),
     )
   }
 }

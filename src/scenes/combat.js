@@ -1,10 +1,7 @@
 import { Scene } from "./_scene"
 import StateMachine from "javascript-state-machine"
 import { Raider } from "../entities/raider.entity"
-import { Deck } from "../deck/deck"
-import { cardFactory } from "../cards/_factory"
 import { TextOption, CardOption } from "../controls/controls"
-import { get } from "../state/state"
 import { html } from "lit-html"
 
 export class Combat extends Scene {
@@ -15,10 +12,7 @@ export class Combat extends Scene {
 
     this.__stance = "fight"
 
-    this.deck = new Deck(
-      this.game,
-      ...get("player.cards").map(config => cardFactory(this.game, config)),
-    )
+    this.deck = this.player.createNewDeck()
 
     this._fsm()
   }
