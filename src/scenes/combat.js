@@ -13,7 +13,7 @@ export class Combat extends Scene {
     this.__stance = "fight"
     this.__actionPoints = 2
 
-    this.deck = this.player.createNewDeck()
+    this.deck = this.player.createDeck()
 
     this._fsm()
   }
@@ -48,9 +48,9 @@ export class Combat extends Scene {
   onEnterUpkeep() {
     this.enemy.chooseIntention()
     this.game.logger.type(
-      html`${this.enemy.name} intention:
-      ${this.enemy.intention.effect.describe()}`,
+      html`${this.enemy.name} intention: ${this.enemy.intention.description}`,
     )
+    console.log(this.enemy.intention.description)
     this.game.controls.clearOptions()
 
     this.__actionPoints = 2
@@ -100,7 +100,7 @@ export class Combat extends Scene {
     this.enemy.__block = 0
     this.enemy.__anticipation = 0
 
-    this.enemy.intention.effect.apply(this.player)
+    this.enemy.intention.apply(this.player)
 
     if (this.player.health <= 0 || this.enemy.health <= 0) {
       setTimeout(() => this.end(), 1000)

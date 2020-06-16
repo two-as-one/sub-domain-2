@@ -1,26 +1,26 @@
 import { Anus } from "./anus.card"
 import { Block } from "./block.card"
-import { Breast } from "./breast.card"
+import { Breasts } from "./breasts.card"
 import { Grope } from "./grope.card"
 import { Kick } from "./kick.card"
 import { Kiss } from "./kiss.card"
 import { Penis } from "./Penis.card"
 import { Relax } from "./relax.card"
 import { Slap } from "./slap.card"
-import { Testicle } from "./testicle.card"
+import { Testicles } from "./testicles.card"
 import { Vagina } from "./vagina.card"
 
 const CARDS = [
   Anus,
   Block,
-  Breast,
+  Breasts,
   Grope,
   Kick,
   Kiss,
   Penis,
   Relax,
   Slap,
-  Testicle,
+  Testicles,
   Vagina,
 ]
 
@@ -34,4 +34,11 @@ export const cardFactory = function (game, config = {}) {
   config = Object.assign({}, JSON.parse(JSON.stringify(Card.defaults)), config)
 
   return new Card(game, config)
+}
+
+export const serializeCard = function (card) {
+  return {
+    name: card.name,
+    level: card.level,
+  }
 }

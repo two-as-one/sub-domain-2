@@ -16,3 +16,10 @@
 ## ideas
 
 - player & enemy can 'consume spunk'
+
+## combat rewards
+
+- fuel
+- skill
+- body part
+- relic ?

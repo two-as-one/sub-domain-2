@@ -1,9 +1,10 @@
 import { Effect } from "./_effect"
+import { html } from "lit-html"
 import tooltips from "./_tooltips.yaml"
 
 export class FightEffect extends Effect {
-  describe() {
-    return `Enter fight stance.`
+  get description() {
+    return html`<span class="effect">Enter fight stance. </span>`
   }
 
   apply() {

@@ -1,4 +1,4 @@
-import { EntityAI } from "./_entity.ai"
+import { EntityAI, Intention } from "./_entity.ai"
 import { PainEffect } from "../combat-effects/pain.effect"
 import { LoveEffect } from "../combat-effects/love.effect"
 import { FightEffect } from "../combat-effects/fight.effect"
@@ -16,30 +16,70 @@ export class Raider extends EntityAI {
 
   get intentions() {
     return [
-      {
-        effect: new PainEffect(this.game, this, { value: 3 }),
+      new Intention({
+        effects: [new PainEffect(this.game, this, { value: 3 })],
         applies: () => {
-          return this.love <= this.pain
+          return true
         },
-      },
-      {
-        effect: new LoveEffect(this.game, this, { value: 3 }),
+      }),
+      new Intention({
+        effects: [new LoveEffect(this.game, this, { value: 3 })],
+        applies: () => {
+          return true
+        },
+      }),
+      new Intention({
+        effects: [new PainEffect(this.game, this, { value: 3 })],
+        applies: () => {
+          return this.love < this.pain
+        },
+      }),
+      new Intention({
+        effects: [new LoveEffect(this.game, this, { value: 3 })],
         applies: () => {
           return this.love > this.pain
         },
-      },
-      {
-        effect: new FightEffect(this.game, this, {}),
+      }),
+      new Intention({
+        effects: [new FightEffect(this.game, this, {})],
         applies: () => {
-          return this.pain > this.love && this.game.scene.stance === "foreplay"
+          return (
+            this.pain > this.maxHealth / 2 &&
+            this.game.scene.stance === "foreplay"
+          )
         },
-      },
-      {
-        effect: new ForeplayEffect(this.game, this, {}),
+      }),
+      new Intention({
+        effects: [new ForeplayEffect(this.game, this, {})],
         applies: () => {
-          return this.love > this.pain && this.game.scene.stance === "fight"
+          return (
+            this.love > this.maxHealth / 2 && this.game.scene.stance === "fight"
+          )
         },
-      },
+      }),
+      new Intention({
+        effects: [
+          new LoveEffect(this.game, this, { value: 3 }),
+          new ForeplayEffect(this.game, this, {}),
+        ],
+        applies: () => {
+          return (
+            this.pain < this.maxHealth / 3 && this.game.scene.stance === "fight"
+          )
+        },
+      }),
+      new Intention({
+        effects: [
+          new PainEffect(this.game, this, { value: 3 }),
+          new FightEffect(this.game, this, {}),
+        ],
+        applies: () => {
+          return (
+            this.love <= this.maxHealth / 3 &&
+            this.game.scene.stance === "foreplay"
+          )
+        },
+      }),
     ]
   }
 }

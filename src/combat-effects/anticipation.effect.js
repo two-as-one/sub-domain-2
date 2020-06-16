@@ -1,4 +1,5 @@
 import { Effect } from "./_effect"
+import { html } from "lit-html"
 import tooltips from "./_tooltips.yaml"
 
 export class AnticipationEffect extends Effect {
@@ -6,8 +7,8 @@ export class AnticipationEffect extends Effect {
     return this.config.value || 0
   }
 
-  describe() {
-    return `Anticipate ${this.value} love.`
+  get description() {
+    return html`<span class="effect">Anticipate ${this.value} love. </span>`
   }
 
   apply() {

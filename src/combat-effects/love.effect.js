@@ -13,11 +13,13 @@ export class LoveEffect extends Effect {
     return val
   }
 
-  describe() {
+  get description() {
     if (this.value === this.config.value) {
-      return `Deal ${this.value} love.`
+      return html`<span class="effect">Deal ${this.value} love. </span>`
     } else {
-      return html`Deal <strong>${this.value}</strong> love.`
+      return html`<span class="effect"
+        >Deal <strong>${this.value}</strong> love.
+      </span>`
     }
   }
 

@@ -27,6 +27,7 @@ export class Ship extends Scene {
   resetPlayer() {
     set("player.damage", 0)
     set("player.maxHealth", 60)
+    set("player.deck", Player.starterDeck)
     this.game.player = new Player(this.game)
   }
 }

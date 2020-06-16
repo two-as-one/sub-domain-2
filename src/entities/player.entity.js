@@ -7,6 +7,7 @@ define("player.damage", 0)
 define("player.maxHealth", 60)
 define("player.gender", "man")
 define("player.class", "fighter")
+define("player.deck", [])
 
 export class Player extends Entity {
   constructor(...args) {
@@ -20,37 +21,32 @@ export class Player extends Entity {
     return "Player"
   }
 
-  createNewDeck() {
+  static get starterDeck() {
     const cards = []
-
     switch (get("player.gender")) {
       case "man":
         cards.push(
-          { title: "Anus" },
-          { title: "Cock" },
-          { title: "Nut" },
-          { title: "Nut" },
+          { title: "Anus", level: 0 },
+          { title: "Cock", level: 1 },
+          { title: "Balls", level: 1 },
         )
         break
       case "woman":
         cards.push(
-          { title: "Anus" },
-          { title: "Pussy" },
-          { title: "Boob" },
-          { title: "Boob" },
+          { title: "Anus", level: 0 },
+          { title: "Pussy", level: 1 },
+          { title: "Boobs", level: 1 },
         )
         break
       case "transman":
-        cards.push({ title: "Anus" }, { title: "Pussy" })
+        cards.push({ title: "Anus", level: 1 }, { title: "Pussy", level: 1 })
         break
       case "transwoman":
         cards.push(
-          { title: "Anus" },
-          { title: "Cock" },
-          { title: "Nut" },
-          { title: "Nut" },
-          { title: "Boob" },
-          { title: "Boob" },
+          { title: "Anus", level: 0 },
+          { title: "Cock", level: 0 },
+          { title: "Balls", level: 0 },
+          { title: "Boobs", level: 0 },
         )
         break
     }
@@ -78,9 +74,13 @@ export class Player extends Entity {
         break
     }
 
+    return cards
+  }
+
+  createDeck() {
     return new Deck(
       this.game,
-      ...cards.map(card => cardFactory(this.game, card)),
+      ...get("player.deck").map(card => cardFactory(this.game, card)),
     )
   }
 }

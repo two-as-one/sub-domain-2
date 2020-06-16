@@ -14,45 +14,78 @@ export class Card {
 
     this.effects = []
 
-    if (this.config.pain) {
-      this.effects.push(
-        new PainEffect(game, game.player, { value: this.config.pain }),
-      )
+    if (this.pain) {
+      this.effects.push(new PainEffect(game, game.player, { value: this.pain }))
     }
 
-    if (this.config.love) {
-      this.effects.push(
-        new LoveEffect(game, game.player, { value: this.config.love }),
-      )
+    if (this.love) {
+      this.effects.push(new LoveEffect(game, game.player, { value: this.love }))
     }
 
-    if (this.config.anticipation) {
+    if (this.anticipation) {
       this.effects.push(
         new AnticipationEffect(game, game.player, {
-          value: this.config.anticipation,
+          value: this.anticipation,
         }),
       )
     }
 
-    if (this.config.block) {
+    if (this.block) {
       this.effects.push(
         new BlockEffect(game, game.player, {
-          value: this.config.block,
+          value: this.block,
         }),
       )
     }
 
-    if (this.config.fight) {
+    if (this.fight) {
       this.effects.push(new FightEffect(game, game.player, {}))
     }
 
-    if (this.config.foreplay) {
+    if (this.foreplay) {
       this.effects.push(new ForeplayEffect(game, game.player, {}))
     }
   }
 
+  get level() {
+    return Math.min(Math.max(0, this.config.level || 0), this.levels.length)
+  }
+
+  get levels() {
+    return this.config.levels || []
+  }
+
   get title() {
-    return this.config.title || "[NO_NAME]"
+    return [
+      Card.levelAdjust(this.levels, this.level),
+      Card.levelAdjust(this.config.title || "[NO_NAME]", this.level),
+    ]
+      .filter(val => !!val)
+      .join(" ")
+  }
+
+  get pain() {
+    return Card.levelAdjust(this.config.pain || 0, this.level)
+  }
+
+  get love() {
+    return Card.levelAdjust(this.config.love || 0, this.level)
+  }
+
+  get block() {
+    return Card.levelAdjust(this.config.block || 0, this.level)
+  }
+
+  get anticipation() {
+    return Card.levelAdjust(this.config.anticipation || 0, this.level)
+  }
+
+  get fight() {
+    return Boolean(this.config.fight)
+  }
+
+  get foreplay() {
+    return Boolean(this.config.foreplay)
   }
 
   get type() {
@@ -60,7 +93,7 @@ export class Card {
   }
 
   get descriptions() {
-    return this.effects.map(effect => effect.describe())
+    return this.effects.map(effect => effect.description)
   }
 
   get tooltips() {
@@ -94,5 +127,13 @@ export class Card {
         }
       </section>
     `
+  }
+
+  static levelAdjust(value, level = 0) {
+    if (Array.isArray(value)) {
+      return value[level]
+    } else {
+      return value
+    }
   }
 }

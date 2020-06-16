@@ -13,11 +13,13 @@ export class PainEffect extends Effect {
     return val
   }
 
-  describe() {
+  get description() {
     if (this.value === this.config.value) {
-      return `Deal ${this.value} pain.`
+      return html`<span class="effect">Deal ${this.value} pain. </span>`
     } else {
-      return html`Deal <strong>${this.value}</strong> pain.`
+      return html`<span class="effect"
+        >Deal <strong>${this.value}</strong> pain.
+      </span>`
     }
   }
 

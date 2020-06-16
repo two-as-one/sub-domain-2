@@ -1,4 +1,5 @@
 import { Effect } from "./_effect"
+import { html } from "lit-html"
 import tooltips from "./_tooltips.yaml"
 
 export class BlockEffect extends Effect {
@@ -6,8 +7,8 @@ export class BlockEffect extends Effect {
     return this.config.value || 0
   }
 
-  describe() {
-    return `Block ${this.value} pain.`
+  get description() {
+    return html`<span class="effect">Block ${this.value} pain. </span>`
   }
 
   apply() {

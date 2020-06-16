@@ -30,3 +30,18 @@ export class EntityAI extends Entity {
     this.actions.push(action)
   }
 }
+
+export class Intention {
+  constructor(config) {
+    this.effects = config.effects
+    this.applies = config.applies
+  }
+
+  get description() {
+    return this.effects.map(effect => effect.description)
+  }
+
+  apply(target) {
+    return this.effects.forEach(effect => effect.apply(target))
+  }
+}

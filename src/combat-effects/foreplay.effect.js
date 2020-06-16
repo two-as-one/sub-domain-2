@@ -1,9 +1,10 @@
 import { Effect } from "./_effect"
+import { html } from "lit-html"
 import tooltips from "./_tooltips.yaml"
 
 export class ForeplayEffect extends Effect {
-  describe() {
-    return `Enter foreplay stance.`
+  get description() {
+    return html`<span class="effect">Enter foreplay stance. </span>`
   }
 
   apply() {
