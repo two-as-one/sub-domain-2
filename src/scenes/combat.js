@@ -1,14 +1,14 @@
 import { Scene } from "./_scene"
 import StateMachine from "javascript-state-machine"
-import { Raider } from "../entities/raider.entity"
 import { TextOption, CardOption } from "../controls/controls"
 import { html } from "lit-html"
+import { EntityFactory } from "../entities/_factory"
 
 export class Combat extends Scene {
   constructor(game) {
     super(game)
     this.player = game.player
-    this.enemy = new Raider(this.game)
+    this.enemy = EntityFactory(game, game.chance.pickone(["raider", "slime"]))
 
     this.__stance = "fight"
     this.__actionPoints = 2
