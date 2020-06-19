@@ -7,6 +7,8 @@
 
 ## example enemy actions
 
+enemy actions should have names (so the player gets an idea of what they are actually doing)
+
 - damage X
 - love X
 - block X
