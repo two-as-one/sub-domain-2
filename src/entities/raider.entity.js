@@ -18,11 +18,11 @@ export class Raider extends EntityAI {
     return [
       new Intention({
         effects: [new PainEffect(this.game, this, { value: 3 })],
-        applies: () => true,
+        applies: () => this.love < this.maxHealth / 3,
       }),
       new Intention({
         effects: [new LoveEffect(this.game, this, { value: 3 })],
-        applies: () => true,
+        applies: () => this.pain < this.maxHealth / 3,
       }),
       new Intention({
         effects: [new PainEffect(this.game, this, { value: 3 })],
