@@ -1,6 +1,6 @@
-fight: Pain dealt is doubled while fighting.
-foreplay: Love dealt is doubled while in foreplay.
-anticipation: Negates an amount of incoming love.
-block: Negates an amount of incoming pain.
-turnDuration: Lasts until the end of turn.
+fight: Pain is doubled while fighting.
+foreplay: Love is doubled while in foreplay.
+anticipation: Anticipate an amount of love.
+block: Block an amount of pain.
+turnDuration: Lasts until end of turn.
 useDuration: Lasts until used.
