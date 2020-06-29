@@ -35,10 +35,3 @@ export const cardFactory = function (game, config = {}) {
 
   return new Card(game, config)
 }
-
-export const serializeCard = function (card) {
-  return {
-    name: card.name,
-    level: card.level,
-  }
-}

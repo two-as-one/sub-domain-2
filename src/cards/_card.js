@@ -51,6 +51,10 @@ export class Card {
     return Math.min(Math.max(0, this.config.level || 0), this.levels.length)
   }
 
+  set level(val) {
+    this.config.level = val
+  }
+
   get levels() {
     return this.config.levels || []
   }
@@ -134,6 +138,13 @@ export class Card {
       return value[level]
     } else {
       return value
+    }
+  }
+
+  get fingerprint() {
+    return {
+      title: this.config.title,
+      level: this.config.level || 0,
     }
   }
 }
