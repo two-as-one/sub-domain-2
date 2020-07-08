@@ -10,7 +10,7 @@ export class Combat extends Scene {
     this.player = game.player
     this.enemy = EntityFactory(game, game.chance.pickone(["raider", "slime"]))
 
-    this.__stance = "fight"
+    this.__stance = "conflict"
     this.__actionPoints = 2
 
     this.deck = this.player.createDeck()
@@ -23,11 +23,11 @@ export class Combat extends Scene {
   }
 
   set stance(val) {
-    if (val === "fight" && this.stance === "foreplay") {
-      this.__stance = "fight"
+    if (val === "conflict" && this.stance === "foreplay") {
+      this.__stance = "conflict"
     }
 
-    if (val === "foreplay" && this.stance === "fight") {
+    if (val === "foreplay" && this.stance === "conflict") {
       this.__stance = "foreplay"
     }
   }

@@ -5,7 +5,7 @@ export class Kick extends Card {
     return {
       title: "Kick",
       pain: 2,
-      fight: true,
+      conflict: true,
       type: "skill",
     }
   }

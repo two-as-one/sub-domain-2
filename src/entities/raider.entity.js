@@ -1,7 +1,7 @@
 import { EntityAI, Intention } from "./_entity.ai"
 import { PainEffect } from "../combat-effects/pain.effect"
 import { LoveEffect } from "../combat-effects/love.effect"
-import { FightEffect } from "../combat-effects/fight.effect"
+import { ConflictEffect } from "../combat-effects/conflict.effect"
 import { ForeplayEffect } from "../combat-effects/foreplay.effect"
 
 export class Raider extends EntityAI {
@@ -33,7 +33,7 @@ export class Raider extends EntityAI {
         applies: () => this.love > this.pain,
       }),
       new Intention({
-        effects: [new FightEffect(this.game, this, {})],
+        effects: [new ConflictEffect(this.game, this, {})],
         applies: () =>
           this.pain > this.maxHealth / 2 &&
           this.game.scene.stance === "foreplay",
@@ -41,7 +41,8 @@ export class Raider extends EntityAI {
       new Intention({
         effects: [new ForeplayEffect(this.game, this, {})],
         applies: () =>
-          this.love > this.maxHealth / 2 && this.game.scene.stance === "fight",
+          this.love > this.maxHealth / 2 &&
+          this.game.scene.stance === "conflict",
       }),
       new Intention({
         effects: [
@@ -49,12 +50,13 @@ export class Raider extends EntityAI {
           new ForeplayEffect(this.game, this, {}),
         ],
         applies: () =>
-          this.pain < this.maxHealth / 3 && this.game.scene.stance === "fight",
+          this.pain < this.maxHealth / 3 &&
+          this.game.scene.stance === "conflict",
       }),
       new Intention({
         effects: [
           new PainEffect(this.game, this, { value: 3 }),
-          new FightEffect(this.game, this, {}),
+          new ConflictEffect(this.game, this, {}),
         ],
         applies: () =>
           this.love <= this.maxHealth / 3 &&

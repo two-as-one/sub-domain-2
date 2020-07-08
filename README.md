@@ -6,7 +6,7 @@ An evolution of sub domain 1 (which was never finished)
 
 - An adult-themed game
 - card-based 'combat'
-- 'combat' is a mixture between fighting and foreplay
+- 'combat' is a mixture between conflict and foreplay
 - rogue lite gameplay with mostly run-based progression but also some permanent progression (such as upgrading your start base)
 
 ## Goals

@@ -4,7 +4,7 @@ import { PainEffect } from "../combat-effects/pain.effect"
 import { LoveEffect } from "../combat-effects/love.effect"
 import { AnticipationEffect } from "../combat-effects/anticipation.effect"
 import { BlockEffect } from "../combat-effects/block.effect"
-import { FightEffect } from "../combat-effects/fight.effect"
+import { ConflictEffect } from "../combat-effects/conflict.effect"
 import { ForeplayEffect } from "../combat-effects/foreplay.effect"
 
 export class Card {
@@ -38,8 +38,8 @@ export class Card {
       )
     }
 
-    if (this.fight) {
-      this.effects.push(new FightEffect(game, game.player, {}))
+    if (this.conflict) {
+      this.effects.push(new ConflictEffect(game, game.player, {}))
     }
 
     if (this.foreplay) {
@@ -80,8 +80,8 @@ export class Card {
     return Card.levelAdjust(this.config.anticipation || 0, this.level)
   }
 
-  get fight() {
-    return Boolean(this.config.fight)
+  get conflict() {
+    return Boolean(this.config.conflict)
   }
 
   get foreplay() {

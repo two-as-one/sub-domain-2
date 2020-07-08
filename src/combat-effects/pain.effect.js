@@ -6,7 +6,7 @@ export class PainEffect extends Effect {
   get value() {
     let val = this.config.value || 0
 
-    if (this.game.scene.stance === "fight") {
+    if (this.game.scene.stance === "conflict") {
       val *= 2
     }
 
@@ -28,6 +28,6 @@ export class PainEffect extends Effect {
   }
 
   get tooltips() {
-    return [tooltips.fight]
+    return [tooltips.conflict]
   }
 }

@@ -4,7 +4,7 @@ import tooltips from "./_tooltips.yaml"
 
 export class ForeplayEffect extends Effect {
   get description() {
-    return html`<span class="effect">Enter foreplay stance. </span>`
+    return html`<span class="effect">Start foreplay. </span>`
   }
 
   apply() {
