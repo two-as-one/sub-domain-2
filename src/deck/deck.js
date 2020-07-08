@@ -5,6 +5,7 @@ export class Deck {
   ) {
     this.game = game
 
+    this.__cards = [...cards]
     this.__library = [...cards]
     this.__hand = []
     this.__discard = []
@@ -14,6 +15,18 @@ export class Deck {
 
   get hand() {
     return this.__hand.slice()
+  }
+
+  get cards() {
+    return this.__cards.sort((a, b) => {
+      if (a.title < b.title) {
+        return -1
+      }
+      if (a.title > b.title) {
+        return 1
+      }
+      return 0
+    })
   }
 
   /** draw a random card from the deck */

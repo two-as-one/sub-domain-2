@@ -50,7 +50,6 @@ export class Combat extends Scene {
     this.game.logger.type(
       html`${this.enemy.name} intention: ${this.enemy.intention.description}`,
     )
-    console.log(this.enemy.intention.description)
     this.game.controls.clearOptions()
 
     this.__actionPoints = 2

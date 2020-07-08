@@ -11,6 +11,8 @@ import { Oasis } from "../scenes/oasis"
 import { Expedition } from "../scenes/expedition"
 import { Identotron } from "../scenes/identotron"
 import { Ship } from "../scenes/ship"
+import { Grow } from "../scenes/grow"
+import { Multiply } from "../scenes/multiply"
 
 define("game.state", "ship")
 export class Game {
@@ -36,6 +38,12 @@ export class Game {
     switch (name) {
       case "identotron":
         this.scene = new Identotron(this)
+        break
+      case "grow":
+        this.scene = new Grow(this)
+        break
+      case "multiply":
+        this.scene = new Multiply(this)
         break
       case "ship":
         this.scene = new Ship(this)

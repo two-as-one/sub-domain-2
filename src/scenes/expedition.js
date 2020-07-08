@@ -16,6 +16,8 @@ export class Expedition extends Scene {
       this.game.controls.setOptions(
         new TextOption("Combat", () => this.game.setScene("combat")),
         new TextOption("Oasis", () => this.game.setScene("oasis")),
+        new TextOption("Grow", () => this.game.setScene("grow")),
+        new TextOption("Multiply", () => this.game.setScene("multiply")),
         new TextOption("Abandon expedition", () => this.abandon()),
       )
     }
