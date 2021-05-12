@@ -37,7 +37,7 @@
     "json-loader": "^0.5.7",
     "lint-staged": "^10.1.7",
     "lit-html": "^1.2.1",
-    "mathjs": "^6.6.4",
+    "mathjs": "^7.5.1",
     "node-sass": "^4.14.1",
     "prettier": "^2.0.5",
     "pretty-quick": "^2.0.1",
