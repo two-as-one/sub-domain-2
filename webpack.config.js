@@ -26,10 +26,12 @@ module.exports = {
       },
       {
         test: /\.yaml$/,
-        use: [{ loader: "json-loader" }, { loader: "yaml-loader" }],
+        use: [{ loader: "yaml-loader" }],
       },
     ],
   },
+
+  devtool: "source-map",
 
   resolve: {
     modules: [path.resolve(__dirname, "src"), "node_modules"],
@@ -41,27 +43,6 @@ module.exports = {
   },
 
   mode: "development",
-  watch: true,
-
-  devServer: {
-    contentBase: "./dist",
-  },
-
-  optimization: {
-    splitChunks: {
-      cacheGroups: {
-        vendors: {
-          priority: -10,
-          test: /[\\/]node_modules[\\/]/,
-        },
-      },
-
-      chunks: "async",
-      minChunks: 1,
-      minSize: 30000,
-      name: true,
-    },
-  },
 
   plugins: [new HtmlWebpackPlugin()],
 }

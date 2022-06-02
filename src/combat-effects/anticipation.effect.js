@@ -1,6 +1,6 @@
 import { Effect } from "./_effect"
-import { html } from "lit-html"
-import tooltips from "./_tooltips.yaml"
+import { html } from "lit"
+import CONFIG from "../config.yaml"
 
 export class AnticipationEffect extends Effect {
   get value() {
@@ -16,6 +16,6 @@ export class AnticipationEffect extends Effect {
   }
 
   get tooltips() {
-    return [tooltips.anticipation, tooltips.turnDuration]
+    return [CONFIG.tooltips.anticipation, CONFIG.tooltips.turnDuration]
   }
 }

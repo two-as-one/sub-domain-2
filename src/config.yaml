@@ -1,23 +1,152 @@
+---
+decks:
+  man:
+    - title: Anus
+      level: 0
+    - title: Cock
+      level: 1
+    - title: Balls
+      level: 1
+  woman:
+    - title: Anus
+      level: 0
+    - title: Pussy
+      level: 1
+    - title: Boobs
+      level: 1
+  transman:
+    - title: Anus
+      level: 1
+    - title: Pussy
+      level: 1
+  transwoman:
+    - title: Anus
+      level: 0
+    - title: Cock
+      level: 0
+    - title: Balls
+      level: 0
+    - title: Boobs
+      level: 0
+  fighter:
+    - title: Block
+    - title: Block
+    - title: Kick
+    - title: Kick
+    - title: Slap
+    - title: Slap
+  lover:
+    - title: Block
+    - title: Block
+    - title: Grope
+    - title: Grope
+    - title: Kiss
+    - title: Kiss
+tooltips:
+  conflict: Pain is doubled while fighting.
+  foreplay: Love is doubled while seducing.
+  anticipation: Anticipate an amount of love.
+  block: Block an amount of pain.
+  turnDuration: Lasts until end of turn.
+  useDuration: Lasts until used.
 cards:
-  sword:
-    name: Sword
-    played:
-      fatigue: str + 3
-
-  shield:
-    name: Shield
-    played:
-      endure: dex + 3
-
-  penis:
-    name: Penis
-    played:
-      fatigue: dom + 3
-    climax:
-      soothe: dom + 3
-
-  anal:
-    name: Anal
-    played:
-      endure: sub + 3
-      reflect: sub + 3
+  anus:
+    anticipation:
+      - 3
+      - 4
+      - 5
+      - 6
+    levels:
+      - tight
+      - ""
+      - wide
+      - gaping
+    title: Anus
+    type: body
+  balls:
+    levels:
+      - cute
+      - ""
+      - large
+      - huge
+    love:
+      - 2
+      - 3
+      - 4
+      - 5
+    title: Balls
+    type: body
+  block:
+    block: 4
+    title: Block
+    type: skill
+  boobs:
+    levels:
+      - cute
+      - ""
+      - large
+      - huge
+    love:
+      - 2
+      - 3
+      - 4
+      - 5
+    title: Boobs
+    type: body
+  cock:
+    levels:
+      - cute
+      - ""
+      - large
+      - huge
+    love:
+      - 2
+      - 3
+      - 4
+      - 5
+    title: Cock
+    type: body
+  grope:
+    foreplay: true
+    love: 2
+    title: Grope
+    type: skill
+  kick:
+    conflict: true
+    pain: 2
+    title: Kick
+    type: skill
+  kiss:
+    love: 3
+    title: Kiss
+    type: skill
+  oops:
+    pain: 1
+    title: Oops!
+    type: skill
+  pussy:
+    anticipation:
+      - 3
+      - 4
+      - 5
+      - 6
+    levels:
+      - tight
+      - ""
+      - wide
+      - gaping
+    title: Pussy
+    type: body
+  relax:
+    heal: 3
+    title: Relax
+    type: skill
+  slap:
+    pain: 3
+    title: Slap
+    type: skill
+  whip:
+    anticipation: 2
+    pain: 2
+    title: Whip
+    type: gear

@@ -1,23 +1,8 @@
-import { Scene } from "./_scene"
+import { Scene } from "./_Scene"
 import StateMachine from "javascript-state-machine"
-import { TextOption, CardOption } from "../controls/controls"
-import { html } from "lit-html"
-import { EntityFactory } from "../entities/_factory"
+import { EntityFactory } from "../../entities/_factory"
 
-export class Combat extends Scene {
-  constructor(game) {
-    super(game)
-    this.player = game.player
-    this.enemy = EntityFactory(game, game.chance.pickone(["raider", "slime"]))
-
-    this.__stance = "conflict"
-    this.__actionPoints = 2
-
-    this.deck = this.player.createDeck()
-
-    this._fsm()
-  }
-
+export class CombatScene extends Scene {
   get stance() {
     return this.__stance
   }
@@ -32,31 +17,45 @@ export class Combat extends Scene {
     }
   }
 
+  onCardUsed(e) {
+    this.playCard(e.detail)
+  }
+
   onEnterIntro() {
-    this.game.logger.type(`You've stumbled across a ${this.enemy.name}`)
-    this.game.controls.clearOptions()
+    this.player = this.game.player
+    this.enemy = EntityFactory(
+      this.game,
+      this.game.chance.pickone(["raider", "slime"])
+    )
+
+    this.__stance = "conflict"
+    this.__actionPoints = 2
+
+    this.deck = this.player.createDeck()
+
+    this.chat.type(`You've stumbled across a ${this.enemy.name}`)
+    this.options = []
 
     setTimeout(
       () =>
-        this.game.controls.setOptions(
-          new TextOption(`It's go time`, () => this.doUpkeep()),
-        ),
-      1000,
+        (this.options = [{ text: `It's go time`, fn: () => this.doUpkeep() }]),
+      1000
     )
   }
 
   onEnterUpkeep() {
     this.enemy.chooseIntention()
-    this.game.logger.type(
-      html`${this.enemy.name} intention: ${this.enemy.intention.description}`,
+    console.log(this.enemy.intention.description)
+    this.chat.type(
+      `${this.enemy.name} intention: ${this.enemy.intention.description}`
     )
-    this.game.controls.clearOptions()
+    this.options = []
 
     this.__actionPoints = 2
     this.player.__block = 0
     this.player.__anticipation = 0
 
-    this.deck.hand.forEach(card => this.deck.discard(card))
+    this.deck.hand.forEach((card) => this.deck.discard(card))
 
     this.deck.draw()
     this.deck.draw()
@@ -67,17 +66,14 @@ export class Combat extends Scene {
   }
 
   onEnterAwaitCard() {
-    this.game.logger.type("choose a card")
-    this.game.controls.setOptions(
-      ...this.deck.hand.map(
-        card => new CardOption(card, () => this.playCard(card)),
-      ),
-    )
+    this.chat.type("choose a card")
+    this.options = []
+    this.hand = [...this.deck.hand]
   }
 
   onEnterPlayCard(transition, card) {
-    this.game.logger.type(`playing ${card.title}`, { source: "player" })
-    this.game.controls.clearOptions()
+    this.chat.type(`playing ${card.title}`, { source: "player" })
+    this.options = []
     this.__actionPoints -= 1
 
     this.deck.discard(card)
@@ -86,15 +82,18 @@ export class Combat extends Scene {
     if (this.player.health <= 0 || this.enemy.health <= 0) {
       setTimeout(() => this.end(), 1000)
     } else if (this.__actionPoints > 0) {
+      this.hand = [...this.deck.hand]
       setTimeout(() => this.awaitCard(), 1000)
     } else {
+      this.hand = []
       setTimeout(() => this.doEnemy(), 1000)
     }
   }
 
   onEnterEnemyTurn() {
-    this.game.logger.type(`enemy turn`)
-    this.game.controls.clearOptions()
+    this.chat.type(`enemy turn`)
+    this.options = []
+    this.hand = []
 
     this.enemy.__block = 0
     this.enemy.__anticipation = 0
@@ -117,17 +116,17 @@ export class Combat extends Scene {
   }
 
   onEnterVictory() {
-    this.game.logger.type(`You won!`)
-    this.game.controls.setOptions(
-      new TextOption(`Yay!`, () => this.game.setScene("expedition")),
-    )
+    this.chat.type(`You won!`)
+    this.options = [
+      { text: `Yay!`, fn: () => this.game.setScene("expedition") },
+    ]
   }
 
   onEnterDefeat() {
-    this.game.logger.type(`You lost!`)
-    this.game.controls.setOptions(
-      new TextOption(`Awww…`, () => this.game.setScene("expedition")),
-    )
+    this.chat.type(`You lost!`)
+    this.options = [
+      { text: `Awww…`, fn: () => this.game.setScene("expedition") },
+    ]
   }
 
   unload() {
@@ -135,7 +134,7 @@ export class Combat extends Scene {
   }
 }
 
-StateMachine.factory(Combat, {
+StateMachine.factory(CombatScene, {
   init: "intro",
   transitions: [
     { name: "start", from: "none", to: "intro" },

@@ -1,6 +1,6 @@
 import { Effect } from "./_effect"
-import { html } from "lit-html"
-import tooltips from "./_tooltips.yaml"
+import { html } from "lit"
+import CONFIG from "../config.yaml"
 
 export class BlockEffect extends Effect {
   get value() {
@@ -16,6 +16,6 @@ export class BlockEffect extends Effect {
   }
 
   get tooltips() {
-    return [tooltips.block, tooltips.turnDuration]
+    return [CONFIG.tooltips.block, CONFIG.tooltips.turnDuration]
   }
 }

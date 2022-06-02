@@ -1,10 +1,10 @@
 import { Effect } from "./_effect"
-import { html } from "lit-html"
-import tooltips from "./_tooltips.yaml"
+import { html } from "lit"
+import CONFIG from "../config.yaml"
 
 export class ForeplayEffect extends Effect {
   get description() {
-    return html`<span class="effect">Start foreplay. </span>`
+    return html`<span class="effect pink">Seduce! </span>`
   }
 
   apply() {
@@ -12,6 +12,6 @@ export class ForeplayEffect extends Effect {
   }
 
   get tooltips() {
-    return [tooltips.foreplay]
+    return [CONFIG.tooltips.foreplay]
   }
 }

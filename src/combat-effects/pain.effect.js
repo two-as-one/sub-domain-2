@@ -1,6 +1,6 @@
 import { Effect } from "./_effect"
-import { html } from "lit-html"
-import tooltips from "./_tooltips.yaml"
+import { html } from "lit"
+import CONFIG from "../config.yaml"
 
 export class PainEffect extends Effect {
   get value() {
@@ -15,9 +15,9 @@ export class PainEffect extends Effect {
 
   get description() {
     if (this.value === this.config.value) {
-      return html`<span class="effect">Deal ${this.value} pain. </span>`
+      return html`<span class="effect blue">Deal ${this.value} pain. </span>`
     } else {
-      return html`<span class="effect"
+      return html`<span class="effect blue"
         >Deal <strong>${this.value}</strong> pain.
       </span>`
     }
@@ -28,6 +28,6 @@ export class PainEffect extends Effect {
   }
 
   get tooltips() {
-    return [tooltips.conflict]
+    return [CONFIG.tooltips.conflict]
   }
 }

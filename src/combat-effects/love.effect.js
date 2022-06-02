@@ -1,6 +1,6 @@
 import { Effect } from "./_effect"
-import { html } from "lit-html"
-import tooltips from "./_tooltips.yaml"
+import { html } from "lit"
+import CONFIG from "../config.yaml"
 
 export class LoveEffect extends Effect {
   get value() {
@@ -15,9 +15,9 @@ export class LoveEffect extends Effect {
 
   get description() {
     if (this.value === this.config.value) {
-      return html`<span class="effect">Deal ${this.value} love. </span>`
+      return html`<span class="effect pink">Deal ${this.value} love. </span>`
     } else {
-      return html`<span class="effect"
+      return html`<span class="effect pink"
         >Deal <strong>${this.value}</strong> love.
       </span>`
     }
@@ -28,6 +28,6 @@ export class LoveEffect extends Effect {
   }
 
   get tooltips() {
-    return [tooltips.foreplay]
+    return [CONFIG.tooltips.foreplay]
   }
 }

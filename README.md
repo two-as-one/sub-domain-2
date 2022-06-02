@@ -30,3 +30,8 @@ Why is the player on this planet? Are they stranded? Why do they go on expeditio
 - scifi and technology with high biodiversity
 - has eldritch monsters and mild body horror
 - magic is mostly biological, potions and transformations exists but fireball doesn't
+
+## TODO
+- upgrade to lit dev
+- character / deck view
+- update palette to nickelodeon palette
