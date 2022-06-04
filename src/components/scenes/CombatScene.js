@@ -45,7 +45,6 @@ export class CombatScene extends Scene {
 
   onEnterUpkeep() {
     this.enemy.chooseIntention()
-    console.log(this.enemy.intention.description)
     this.chat.type(
       `${this.enemy.name} intention: ${this.enemy.intention.description}`
     )
@@ -68,7 +67,8 @@ export class CombatScene extends Scene {
   onEnterAwaitCard() {
     this.chat.type("choose a card")
     this.options = []
-    this.hand = [...this.deck.hand]
+    this.hand.cards = [...this.deck.hand]
+    this.hand.show()
   }
 
   onEnterPlayCard(transition, card) {
@@ -82,10 +82,11 @@ export class CombatScene extends Scene {
     if (this.player.health <= 0 || this.enemy.health <= 0) {
       setTimeout(() => this.end(), 1000)
     } else if (this.__actionPoints > 0) {
-      this.hand = [...this.deck.hand]
-      setTimeout(() => this.awaitCard(), 1000)
+      this.hand.cards = [...this.deck.hand]
+      this.hand.show()
+      setTimeout(() => this.awaitCard(), 0)
     } else {
-      this.hand = []
+      this.hand.hide()
       setTimeout(() => this.doEnemy(), 1000)
     }
   }
@@ -93,7 +94,7 @@ export class CombatScene extends Scene {
   onEnterEnemyTurn() {
     this.chat.type(`enemy turn`)
     this.options = []
-    this.hand = []
+    this.hand.hide()
 
     this.enemy.__block = 0
     this.enemy.__anticipation = 0

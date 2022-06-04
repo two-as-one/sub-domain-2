@@ -5,12 +5,16 @@ import { BlockEffect } from "../combat-effects/block.effect"
 import { ConflictEffect } from "../combat-effects/conflict.effect"
 import { ForeplayEffect } from "../combat-effects/foreplay.effect"
 
+let id = 0
 export class Card {
   constructor(game, config) {
     this.game = game
     this.config = config
 
     this.effects = []
+
+    this.id = id
+    id += 1
 
     if (this.pain) {
       this.effects.push(new PainEffect(game, game.player, { value: this.pain }))

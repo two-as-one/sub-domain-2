@@ -1,6 +1,7 @@
 import StateMachine from "javascript-state-machine"
 import { cardFactory } from "../../cards/factory"
 import { set } from "../../state/state"
+import { ChatMessage } from "../ChatMessage"
 import { Scene } from "./_Scene"
 
 export class MultiplyScene extends Scene {
@@ -9,7 +10,11 @@ export class MultiplyScene extends Scene {
   }
 
   onEnterIntro() {
-    this.chat.type("You find a vial of multiply serum.")
+    this.chat.type(
+      `You find a vial of ${ChatMessage.bold(
+        ChatMessage.pink("multiply serum")
+      )}.`
+    )
     this.options = [
       { text: `Use it.`, fn: () => this.use() },
       { text: `Ignore it.`, fn: () => this.game.setScene("expedition") },
@@ -22,7 +27,8 @@ export class MultiplyScene extends Scene {
   onEnterUse() {
     if (this.viableCards.length) {
       this.chat.type("Which body part do you want to use it on?")
-      this.hand = [...this.viableCards]
+      this.hand.cards = [...this.viableCards]
+      this.hand.show()
       this.options = []
     } else {
       this.chat.type("You don't have any applicable body parts.")
@@ -34,7 +40,7 @@ export class MultiplyScene extends Scene {
     this.deck.cards.push(cardFactory(this.game, card.fingerprint))
     this.chat.type(`You have grown and extra ${card.title}!`)
     this.options = [{ text: `…`, fn: () => this.game.setScene("expedition") }]
-    this.hand = []
+    this.hand.hide()
 
     set(
       "player.deck",

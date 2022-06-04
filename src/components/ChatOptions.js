@@ -6,7 +6,7 @@ export class ChatOptions extends LitElement {
       background-color: var(--main-color-background);
       box-sizing: border-box;
       color: var(--main-color-foreground);
-      padding: var(--spacing-3x);
+      padding: 0;
       margin: var(--spacing-3x);
       flex-direction: column;
       display: flex;
@@ -16,6 +16,7 @@ export class ChatOptions extends LitElement {
 
     ul {
       list-style: decimal;
+      margin: 0;
     }
 
     li {
@@ -42,8 +43,25 @@ export class ChatOptions extends LitElement {
     `
   }
 
+  connectedCallback() {
+    super.connectedCallback()
+    addEventListener("keydown", this.onKeyDown)
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback()
+    window.removeEventListener("keydown", this.onKeyDown)
+  }
+
   constructor() {
     super()
     this.options = []
+
+    this.onKeyDown = (e) => {
+      const option = this.options[Number(e.key) - 1]
+      if (option) {
+        option.fn()
+      }
+    }
   }
 }

@@ -2,6 +2,7 @@ import { html, css, LitElement } from "lit"
 import { ChatLog } from "../ChatLog"
 import { ChatOptions } from "../ChatOptions"
 import { PlayerHand } from "../PlayerHand"
+import { ref, createRef } from "lit/directives/ref.js"
 
 customElements.define("chat-log", ChatLog)
 customElements.define("chat-options", ChatOptions)
@@ -21,13 +22,13 @@ export class Scene extends LitElement {
   static properties = {
     game: { type: Object },
     options: { state: true },
-    hand: { state: true },
   }
+
+  $hand = createRef()
 
   constructor() {
     super()
     this.options = []
-    this.hand = []
   }
 
   firstUpdated() {
@@ -38,9 +39,13 @@ export class Scene extends LitElement {
     return html`<chat-log></chat-log>
       <chat-options .options=${this.options}></chat-options>
       <player-hand
-        .cards=${this.hand}
+        ${ref(this.$hand)}
         @selected=${(card) => this.onCardUsed(card)}
       ></player-hand> `
+  }
+
+  get hand() {
+    return this.$hand?.value
   }
 
   get chat() {

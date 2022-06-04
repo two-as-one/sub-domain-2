@@ -1,5 +1,6 @@
 import StateMachine from "javascript-state-machine"
 import { set } from "../../state/state"
+import { ChatMessage } from "../ChatMessage"
 import { Scene } from "./_Scene"
 
 export class GrowScene extends Scene {
@@ -8,7 +9,11 @@ export class GrowScene extends Scene {
   }
 
   onEnterIntro() {
-    this.chat.type("You find a vial of growth serum.")
+    this.chat.type(
+      `You find a vial of ${ChatMessage.pink(
+        ChatMessage.bold("growth serum")
+      )}.`
+    )
 
     this.options = [
       { text: `Use it.`, fn: () => this.use() },
@@ -24,7 +29,8 @@ export class GrowScene extends Scene {
   onEnterUse() {
     if (this.viableCards.length) {
       this.chat.type("Which body part do you want to use it on?")
-      this.hand = [...this.viableCards]
+      this.hand.cards = [...this.viableCards]
+      this.hand.show()
       this.options = []
     } else {
       this.chat.type("You don't have any applicable body parts.")
@@ -37,7 +43,7 @@ export class GrowScene extends Scene {
     card.level += 1
     this.chat.type(`Your ${previousName} became ${card.title}!`)
     this.options = [{ text: `…`, fn: () => this.game.setScene("expedition") }]
-    this.hand = []
+    this.hand.hide()
 
     set(
       "player.deck",

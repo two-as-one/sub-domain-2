@@ -13,7 +13,6 @@ export class GameCard extends LitElement {
       display: flex;
       flex-direction: column;
       font-size: var(--font-size-medium);
-      height: 300px;
       margin: 0 -24px;
       position: relative;
       position: relative;
@@ -26,7 +25,7 @@ export class GameCard extends LitElement {
     h1 {
       font-size: 1rem;
       margin: 0;
-      padding: 8px 8px 0 16px;
+      padding: 8px 8px 0 8px;
       text-align: left;
       text-transform: uppercase;
     }
@@ -41,6 +40,7 @@ export class GameCard extends LitElement {
     .description {
       border: 2px dashed var(--main-color-foreground);
       flex-grow: 1;
+      height: 100px;
       margin: 8px;
       padding: 8px;
     }
@@ -54,6 +54,11 @@ export class GameCard extends LitElement {
     ul {
       list-style: none;
       padding: 0;
+      margin: 0;
+    }
+
+    strong {
+      color: var(--color-white);
     }
 
     .effect.blue {

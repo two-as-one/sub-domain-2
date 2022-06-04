@@ -9,6 +9,7 @@ import { IdentotronScene } from "./scenes/IdentotronScene"
 import { MultiplyScene } from "./scenes/MultiplyScene"
 import { OasisScene } from "./scenes/OasisScene"
 import { ShipScene } from "./scenes/ShipScene"
+import { ref, createRef } from "lit/directives/ref.js"
 
 define("game.state", "ship")
 
@@ -48,8 +49,45 @@ export class SubDomainGame extends LitElement {
     }
   `
 
+  $scene = createRef()
+
   render() {
-    return html` <section class="sub-domain">${this.scene}</section> `
+    const state = get("game.state")
+
+    return html`
+      <section class="sub-domain">
+        ${{
+          identotron: html`<identotron-scene
+            .game=${this}
+            ${ref(this.$scene)}
+          ></identotron-scene>`,
+          grow: html`<grow-scene
+            .game=${this}
+            ${ref(this.$scene)}
+          ></grow-scene>`,
+          multiply: html`<multiply-scene
+            .game=${this}
+            ${ref(this.$scene)}
+          ></multiply-scene>`,
+          ship: html`<ship-scene
+            .game=${this}
+            ${ref(this.$scene)}
+          ></ship-scene>`,
+          combat: html`<combat-scene
+            .game=${this}
+            ${ref(this.$scene)}
+          ></combat-scene>`,
+          oasis: html`<oasis-scene
+            .game=${this}
+            ${ref(this.$scene)}
+          ></oasis-scene>`,
+          expedition: html`<expedition-scene
+            .game=${this}
+            ${ref(this.$scene)}
+          ></expedition-scene>`,
+        }[state]}
+      </section>
+    `
   }
 
   constructor() {
@@ -57,36 +95,17 @@ export class SubDomainGame extends LitElement {
     this.player = new Player(this)
     this.chance = new Chance()
     this.setScene()
+    window.game = this
   }
 
   setScene(name = get("game.state")) {
     this.scene?.unload?.()
     set("game.state", name)
     save()
-
-    switch (name) {
-      case "identotron":
-        this.scene = html`<identotron-scene .game=${this}></identotron-scene>`
-        break
-      case "grow":
-        this.scene = html`<grow-scene .game=${this}></grow-scene>`
-        break
-      case "multiply":
-        this.scene = html`<multiply-scene .game=${this}></multiply-scene>`
-        break
-      case "ship":
-        this.scene = html`<ship-scene .game=${this}></ship-scene>`
-        break
-      case "combat":
-        this.scene = html`<combat-scene .game=${this}></combat-scene>`
-        break
-      case "oasis":
-        this.scene = html`<oasis-scene .game=${this}></oasis-scene>`
-        break
-      case "expedition":
-        this.scene = html`<expedition-scene .game=${this}></expedition-scene>`
-        break
-    }
     this.requestUpdate()
+  }
+
+  get scene() {
+    return this.$scene?.value
   }
 }

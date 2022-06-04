@@ -1,12 +1,15 @@
 import StateMachine from "javascript-state-machine"
 import { set, get } from "../../state/state"
+import { ChatMessage } from "../ChatMessage"
 import { Scene } from "./_Scene"
 
 export class IdentotronScene extends Scene {
   onEnterIntro(transition) {
     this.chat.type(
       transition.from === "none"
-        ? "Welcome to the IDENTOTRON-3000. How may I be of assistance?"
+        ? `Welcome to the ${ChatMessage.pink(
+            ChatMessage.bold("IDENTOTRON-3000")
+          )}. How may I be of assistance?`
         : "Is there anything else I can help you with?"
     )
 

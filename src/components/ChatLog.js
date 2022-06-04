@@ -1,27 +1,32 @@
 import { html, css, LitElement } from "lit"
 import { ChatMessage } from "./ChatMessage"
+import { repeat } from "lit/directives/repeat.js"
 
 customElements.define("chat-message", ChatMessage)
 
+let i = 0
 export class ChatLog extends LitElement {
   static styles = css`
     :host {
       background-color: var(--main-color-background);
       border: 2px solid var(--main-color-foreground);
       box-sizing: border-box;
-      padding: var(--spacing-3x);
-      margin: var(--spacing-3x);
-      flex-direction: column;
-      overflow-y: auto;
       display: flex;
+      flex-direction: column-reverse;
       height: calc(50vh - var(--spacing-3x) * 2);
+      justify-content: flex-end;
+      margin: var(--spacing-3x);
+      overflow-y: auto;
+      padding: var(--spacing-3x);
       width: 500px;
     }
   `
 
   render() {
     return html`
-      ${this.messages.map(
+      ${repeat(
+        this.messages,
+        (message) => message.id,
         (message) =>
           html`<chat-message
             text=${message.text}
@@ -41,12 +46,18 @@ export class ChatLog extends LitElement {
   }
 
   type(text, options = {}) {
-    this.messages.unshift({
+    this.messages.push({
+      id: i,
       text,
       options,
     })
 
-    this.messages.length = 100
+    i++
+
+    while (this.messages.length > 100) {
+      this.messages.shift()
+    }
+
     this.requestUpdate()
   }
 

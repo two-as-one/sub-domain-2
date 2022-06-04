@@ -1,5 +1,7 @@
 import { html, css, LitElement } from "lit"
 import { GameCard } from "./GameCard"
+import { repeat } from "lit/directives/repeat.js"
+import { classMap } from "lit/directives/class-map.js"
 
 customElements.define("game-card", GameCard)
 
@@ -19,6 +21,12 @@ export class PlayerHand extends LitElement {
       height: 300px;
       position: absolute;
       bottom: 0;
+      transform: translateY(300px);
+      transition: transform 0.25s ease-in-out;
+    }
+
+    .hand.visible {
+      transform: translateY(0);
     }
 
     .card-holder {
@@ -26,6 +34,7 @@ export class PlayerHand extends LitElement {
       left: -70px;
       top: 0;
       transform-origin: 25% var(--transform-origin-y);
+      transition: transform-origin 0.1s linear;
       z-index: 1;
     }
 
@@ -36,25 +45,31 @@ export class PlayerHand extends LitElement {
 
   static properties = {
     cards: { type: Array },
+    isVisible: { state: true },
   }
 
   render() {
-    const spread = ((10 - this.cards.length) / 10) * 2000 + 1000
+    const classes = { hand: true, visible: this.isVisible }
+    const spread = ((10 - this.cards.length) / 10) * 3500 + 500
     this.style.setProperty("--transform-origin-y", `${spread}px`)
-    return html`<div class="hand">
-      ${this.cards.map((card, i) => {
-        const rotation = (i - (this.cards.length - 1) / 2) * 3
+    return html`<div class=${classMap(classes)}>
+      ${repeat(
+        this.cards,
+        (card) => card.id,
+        (card, i) => {
+          const rotation = (i - (this.cards.length - 1) / 2) * 3
 
-        return html`<div
-          class="card-holder"
-          style="transform:rotate(${rotation}deg)"
-        >
-          <game-card
-            .card=${card}
-            @click=${() => this.onCardSelected(card)}
-          ></game-card>
-        </div>`
-      })}
+          return html`<div
+            class="card-holder"
+            style="transform:rotate(${rotation}deg)"
+          >
+            <game-card
+              .card=${card}
+              @click=${() => this.onCardSelected(card)}
+            ></game-card>
+          </div>`
+        }
+      )}
     </div>`
   }
 
@@ -67,7 +82,11 @@ export class PlayerHand extends LitElement {
     this.dispatchEvent(new CustomEvent("selected", { detail: card }))
   }
 
-  show() {}
+  show() {
+    this.isVisible = true
+  }
 
-  hide() {}
+  hide() {
+    this.isVisible = false
+  }
 }
