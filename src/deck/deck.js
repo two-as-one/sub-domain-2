@@ -32,12 +32,18 @@ export class Deck {
       this.shuffle()
     }
 
+    if (this.__library.length < 1) {
+      return
+    }
+
     const card = this.game.chance.pickone(this.__library)
 
     if (card) {
       this.__library.splice(this.__library.indexOf(card), 1)
       this.__hand.push(card)
     }
+
+    return card
   }
 
   /** discard a card from hand */

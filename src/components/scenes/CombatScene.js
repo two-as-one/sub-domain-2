@@ -10,10 +10,12 @@ export class CombatScene extends Scene {
   set stance(val) {
     if (val === "conflict" && this.stance === "foreplay") {
       this.__stance = "conflict"
+      this.game.dispatchEvent(new CustomEvent("cardStateChanged"))
     }
 
     if (val === "foreplay" && this.stance === "conflict") {
       this.__stance = "foreplay"
+      this.game.dispatchEvent(new CustomEvent("cardStateChanged"))
     }
   }
 
@@ -22,16 +24,12 @@ export class CombatScene extends Scene {
   }
 
   onEnterIntro() {
-    this.player = this.game.player
     this.enemy = EntityFactory(
       this.game,
       this.game.chance.pickone(["raider", "slime"])
     )
 
     this.__stance = "conflict"
-    this.__actionPoints = 2
-
-    this.deck = this.player.createDeck()
 
     this.chat.type(`You've stumbled across a ${this.enemy.name}`)
     this.options = []
@@ -43,58 +41,62 @@ export class CombatScene extends Scene {
     )
   }
 
-  onEnterUpkeep() {
+  async onEnterUpkeep() {
     this.enemy.chooseIntention()
     this.chat.type(
       `${this.enemy.name} intention: ${this.enemy.intention.description}`
     )
     this.options = []
+    this.deck.showHand = true
 
     this.__actionPoints = 2
     this.player.__block = 0
     this.player.__anticipation = 0
 
-    this.deck.hand.forEach((card) => this.deck.discard(card))
+    await new Promise((r) => setTimeout(r, 250))
+    await this.deck.draw()
+    await new Promise((r) => setTimeout(r, 250))
+    await this.deck.draw()
+    await new Promise((r) => setTimeout(r, 250))
+    await this.deck.draw()
+    await new Promise((r) => setTimeout(r, 250))
+    await this.deck.draw()
 
-    this.deck.draw()
-    this.deck.draw()
-    this.deck.draw()
-    this.deck.draw()
-
-    setTimeout(() => this.awaitCard(), 1000)
+    setTimeout(() => this.awaitCard(), 0)
   }
 
   onEnterAwaitCard() {
     this.chat.type("choose a card")
     this.options = []
-    this.hand.cards = [...this.deck.hand]
-    this.hand.show()
   }
 
-  onEnterPlayCard(transition, card) {
+  async onEnterPlayCard(transition, card) {
     this.chat.type(`playing ${card.title}`, { source: "player" })
     this.options = []
     this.__actionPoints -= 1
 
-    this.deck.discard(card)
+    this.deck.play(card)
     card.play(this.enemy)
 
     if (this.player.health <= 0 || this.enemy.health <= 0) {
       setTimeout(() => this.end(), 1000)
     } else if (this.__actionPoints > 0) {
-      this.hand.cards = [...this.deck.hand]
-      this.hand.show()
       setTimeout(() => this.awaitCard(), 0)
     } else {
-      this.hand.hide()
-      setTimeout(() => this.doEnemy(), 1000)
+      await new Promise((r) => setTimeout(r, 1500))
+
+      while (this.deck.__hand.length > 0) {
+        this.deck.discard()
+        await new Promise((r) => setTimeout(r, 250))
+      }
+
+      setTimeout(() => this.doEnemy(), 0)
     }
   }
 
   onEnterEnemyTurn() {
     this.chat.type(`enemy turn`)
     this.options = []
-    this.hand.hide()
 
     this.enemy.__block = 0
     this.enemy.__anticipation = 0

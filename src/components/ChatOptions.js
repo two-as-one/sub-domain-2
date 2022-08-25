@@ -10,7 +10,6 @@ export class ChatOptions extends LitElement {
       margin: var(--spacing-3x);
       flex-direction: column;
       display: flex;
-      height: calc(50vh - var(--spacing-3x) * 2);
       width: 500px;
     }
 

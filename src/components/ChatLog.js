@@ -1,8 +1,9 @@
 import { html, css, LitElement } from "lit"
 import { ChatMessage } from "./ChatMessage"
 import { repeat } from "lit/directives/repeat.js"
+import { defineElement } from "../utils/defineElement"
 
-customElements.define("chat-message", ChatMessage)
+defineElement("chat-message", ChatMessage)
 
 let i = 0
 export class ChatLog extends LitElement {
@@ -13,7 +14,7 @@ export class ChatLog extends LitElement {
       box-sizing: border-box;
       display: flex;
       flex-direction: column-reverse;
-      height: calc(50vh - var(--spacing-3x) * 2);
+      height: 300px;
       justify-content: flex-end;
       margin: var(--spacing-3x);
       overflow-y: auto;

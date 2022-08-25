@@ -6,6 +6,7 @@ import CONFIG from "../config.yaml"
 
 define("player.damage", 0)
 define("player.maxHealth", 60)
+define("player.submissiveness", 50)
 define("player.gender", "man")
 define("player.class", "fighter")
 define("player.deck", [])

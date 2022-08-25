@@ -28,6 +28,15 @@ decks:
       level: 0
     - title: Boobs
       level: 0
+  remmy:
+    - title: Cock
+      level: 2
+    - title: Cock
+      level: 2
+    - title: Balls
+      level: 2
+    - title: Boobs
+      level: 2
   fighter:
     - title: Block
     - title: Block
@@ -43,10 +52,9 @@ decks:
     - title: Kiss
     - title: Kiss
 tooltips:
-  conflict: Pain is doubled while fighting.
-  foreplay: Love is doubled while seducing.
-  anticipation: Anticipate an amount of love.
-  block: Block an amount of pain.
+  conflict: <span class="blue">Pain</span> is doubled while <span class="blue">fighting</span>.
+  foreplay: <span class="pink">Love</span> is doubled while <span class="pink">seducing</span>.
+  block: Block is lost at the end of turn.
   turnDuration: Lasts until end of turn.
   useDuration: Lasts until used.
 cards:

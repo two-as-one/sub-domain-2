@@ -10,16 +10,17 @@ import { MultiplyScene } from "./scenes/MultiplyScene"
 import { OasisScene } from "./scenes/OasisScene"
 import { ShipScene } from "./scenes/ShipScene"
 import { ref, createRef } from "lit/directives/ref.js"
+import { defineElement } from "../utils/defineElement"
 
 define("game.state", "ship")
 
-customElements.define("ship-scene", ShipScene)
-customElements.define("identotron-scene", IdentotronScene)
-customElements.define("grow-scene", GrowScene)
-customElements.define("expedition-scene", ExpeditionScene)
-customElements.define("oasis-scene", OasisScene)
-customElements.define("multiply-scene", MultiplyScene)
-customElements.define("combat-scene", CombatScene)
+defineElement("ship-scene", ShipScene)
+defineElement("identotron-scene", IdentotronScene)
+defineElement("grow-scene", GrowScene)
+defineElement("expedition-scene", ExpeditionScene)
+defineElement("oasis-scene", OasisScene)
+defineElement("multiply-scene", MultiplyScene)
+defineElement("combat-scene", CombatScene)
 
 export class SubDomainGame extends LitElement {
   static styles = css`
@@ -45,7 +46,19 @@ export class SubDomainGame extends LitElement {
     }
 
     .sub-domain {
+      align-items: center;
+      display: flex;
+      height: 100vh;
+      justify-content: center;
+      width: 100vw;
+    }
+    .game-container {
+      border: 2px solid var(--color-blue);
+      box-sizing: border-box;
+      height: 800px;
       overflow: hidden;
+      width: 1000px;
+      position: relative;
     }
   `
 
@@ -56,36 +69,38 @@ export class SubDomainGame extends LitElement {
 
     return html`
       <section class="sub-domain">
-        ${{
-          identotron: html`<identotron-scene
-            .game=${this}
-            ${ref(this.$scene)}
-          ></identotron-scene>`,
-          grow: html`<grow-scene
-            .game=${this}
-            ${ref(this.$scene)}
-          ></grow-scene>`,
-          multiply: html`<multiply-scene
-            .game=${this}
-            ${ref(this.$scene)}
-          ></multiply-scene>`,
-          ship: html`<ship-scene
-            .game=${this}
-            ${ref(this.$scene)}
-          ></ship-scene>`,
-          combat: html`<combat-scene
-            .game=${this}
-            ${ref(this.$scene)}
-          ></combat-scene>`,
-          oasis: html`<oasis-scene
-            .game=${this}
-            ${ref(this.$scene)}
-          ></oasis-scene>`,
-          expedition: html`<expedition-scene
-            .game=${this}
-            ${ref(this.$scene)}
-          ></expedition-scene>`,
-        }[state]}
+        <section class="game-container">
+          ${{
+            identotron: html`<identotron-scene
+              .game=${this}
+              ${ref(this.$scene)}
+            ></identotron-scene>`,
+            grow: html`<grow-scene
+              .game=${this}
+              ${ref(this.$scene)}
+            ></grow-scene>`,
+            multiply: html`<multiply-scene
+              .game=${this}
+              ${ref(this.$scene)}
+            ></multiply-scene>`,
+            ship: html`<ship-scene
+              .game=${this}
+              ${ref(this.$scene)}
+            ></ship-scene>`,
+            combat: html`<combat-scene
+              .game=${this}
+              ${ref(this.$scene)}
+            ></combat-scene>`,
+            oasis: html`<oasis-scene
+              .game=${this}
+              ${ref(this.$scene)}
+            ></oasis-scene>`,
+            expedition: html`<expedition-scene
+              .game=${this}
+              ${ref(this.$scene)}
+            ></expedition-scene>`,
+          }[state]}
+        </section>
       </section>
     `
   }

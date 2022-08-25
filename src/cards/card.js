@@ -5,6 +5,13 @@ import { BlockEffect } from "../combat-effects/block.effect"
 import { ConflictEffect } from "../combat-effects/conflict.effect"
 import { ForeplayEffect } from "../combat-effects/foreplay.effect"
 
+import boobsImage from "../images/boobs.png"
+const IMAGES = {
+  Boobs: {
+    1: boobsImage,
+  },
+}
+
 let id = 0
 export class Card {
   constructor(game, config) {
@@ -49,6 +56,10 @@ export class Card {
     }
   }
 
+  get image() {
+    return IMAGES[this.name]?.[this.level]
+  }
+
   get level() {
     return Math.min(Math.max(0, this.config.level || 0), this.levels.length)
   }
@@ -72,6 +83,10 @@ export class Card {
 
   get name() {
     return this.title
+  }
+
+  get key() {
+    return this.config.key
   }
 
   get pain() {

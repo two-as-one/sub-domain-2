@@ -1,9 +1,12 @@
 import { html, css, LitElement } from "lit"
 import { GameCard } from "./GameCard"
+import { CardAnimator } from "./CardAnimator"
 import { repeat } from "lit/directives/repeat.js"
 import { classMap } from "lit/directives/class-map.js"
+import { defineElement } from "../utils/defineElement"
 
-customElements.define("game-card", GameCard)
+defineElement("game-card", GameCard)
+defineElement("card-animator", CardAnimator)
 
 export class PlayerHand extends LitElement {
   static styles = css`
@@ -21,61 +24,73 @@ export class PlayerHand extends LitElement {
       height: 300px;
       position: absolute;
       bottom: 0;
-      transform: translateY(300px);
+      left: 0;
+      transform: translateY(350px);
       transition: transform 0.25s ease-in-out;
     }
 
     .hand.visible {
-      transform: translateY(0);
+      transform: translateY(35px);
     }
 
-    .card-holder {
+    .card-focus {
+      pointer-events: none;
+      z-index: 3;
       position: absolute;
-      left: -70px;
-      top: 0;
-      transform-origin: 25% var(--transform-origin-y);
-      transition: transform-origin 0.1s linear;
-      z-index: 1;
-    }
-
-    .card-holder:hover {
-      z-index: 2;
+      top: -50px;
+      left: var(--left);
+      transform: scale(1.2);
     }
   `
 
   static properties = {
-    cards: { type: Array },
+    game: { type: Object },
     isVisible: { state: true },
+    cardFocus: { state: true },
   }
 
   render() {
     const classes = { hand: true, visible: this.isVisible }
-    const spread = ((10 - this.cards.length) / 10) * 3500 + 500
-    this.style.setProperty("--transform-origin-y", `${spread}px`)
+    const cardsInHand = this.cards.filter((card) => card.inHand)
     return html`<div class=${classMap(classes)}>
       ${repeat(
         this.cards,
         (card) => card.id,
-        (card, i) => {
-          const rotation = (i - (this.cards.length - 1) / 2) * 3
-
-          return html`<div
+        (card) => {
+          return html`<card-animator
+            .index=${cardsInHand.indexOf(card)}
+            .total=${cardsInHand.length}
             class="card-holder"
-            style="transform:rotate(${rotation}deg)"
+            @destroyed=${() => this.__destroy(card)}
+            @mouseover=${(e) => this.#onCardOver(e, card)}
+            @mouseout=${() => this.#onCardOut()}
           >
             <game-card
+              .game=${this.game}
               .card=${card}
               @click=${() => this.onCardSelected(card)}
             ></game-card>
-          </div>`
+          </card-animator>`
         }
       )}
-    </div>`
+      ${this.cardFocus
+        ? html`
+            <div class="card-focus" style=${`--left:${this.cardFocus.left}`}>
+              <game-card
+                .game=${this.game}
+                .card=${this.cardFocus.card}
+                .showTooltip=${true}
+              ></game-card>
+            </div>
+          `
+        : ""}
+    </div> `
   }
 
   constructor() {
     super()
     this.cards = []
+    this.deadCards = []
   }
 
   onCardSelected(card) {
@@ -88,5 +103,42 @@ export class PlayerHand extends LitElement {
 
   hide() {
     this.isVisible = false
+  }
+
+  #onCardOver(e, card) {
+    this.cardFocus = { card, left: e.currentTarget.style.left }
+  }
+
+  #onCardOut() {
+    this.cardFocus = null
+  }
+
+  animateDraw(card) {
+    card.inHand = true
+    this.cards.push(card)
+    this.requestUpdate()
+  }
+
+  animateDiscard(card) {
+    card.inHand = false
+    this.shadowRoot
+      .querySelectorAll("card-animator")
+      .item(this.cards.indexOf(card))
+      .discard()
+    this.requestUpdate()
+  }
+
+  animatePlay(card) {
+    card.inHand = false
+    this.shadowRoot
+      .querySelectorAll("card-animator")
+      .item(this.cards.indexOf(card))
+      .play()
+    this.requestUpdate()
+  }
+
+  __destroy(card) {
+    this.cards.splice(this.cards.indexOf(card), 1)
+    this.requestUpdate()
   }
 }

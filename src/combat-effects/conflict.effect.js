@@ -1,10 +1,13 @@
 import { Effect } from "./_effect"
-import { html } from "lit"
 import CONFIG from "../config.yaml"
 
 export class ConflictEffect extends Effect {
   get description() {
-    return html`<span class="effect blue">Fight! </span>`
+    return `<span class="blue">Fight!</span>`
+  }
+
+  get color() {
+    return "blue"
   }
 
   apply() {

@@ -1,5 +1,4 @@
 import { Effect } from "./_effect"
-import { html } from "lit"
 import CONFIG from "../config.yaml"
 
 export class AnticipationEffect extends Effect {
@@ -8,7 +7,11 @@ export class AnticipationEffect extends Effect {
   }
 
   get description() {
-    return html`<span class="effect">Anticipate ${this.value} love. </span>`
+    return `Block <span class="pink"> ${this.value} love</span>.`
+  }
+
+  get color() {
+    return "pink"
   }
 
   apply() {
@@ -16,6 +19,6 @@ export class AnticipationEffect extends Effect {
   }
 
   get tooltips() {
-    return [CONFIG.tooltips.anticipation, CONFIG.tooltips.turnDuration]
+    return [CONFIG.tooltips.block]
   }
 }

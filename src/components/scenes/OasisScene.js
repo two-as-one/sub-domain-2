@@ -8,7 +8,7 @@ export class OasisScene extends Scene {
   }
 
   onEnterRest() {
-    this.game.player.heal(this.game.player.maxHealth / 3)
+    this.player.heal(this.player.maxHealth / 3)
 
     this.chat.type("You have a quick wank and a little nap.")
     this.options = [{ text: `…`, fn: () => this.game.setScene("expedition") }]

@@ -1,10 +1,13 @@
 import { Effect } from "./_effect"
-import { html } from "lit"
 import CONFIG from "../config.yaml"
 
 export class ForeplayEffect extends Effect {
   get description() {
-    return html`<span class="effect pink">Seduce! </span>`
+    return `<span class="pink">Seduce!</span>`
+  }
+
+  get color() {
+    return "pink"
   }
 
   apply() {

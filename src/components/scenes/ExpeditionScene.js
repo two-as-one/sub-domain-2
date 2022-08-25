@@ -3,7 +3,7 @@ import { Scene } from "./_Scene"
 
 export class ExpeditionScene extends Scene {
   onEnterIntro() {
-    if (this.game.player.health <= 0) {
+    if (this.player.health <= 0) {
       setTimeout(() => this.abandon(), 0)
     } else {
       this.chat.type("Choose where to go next")

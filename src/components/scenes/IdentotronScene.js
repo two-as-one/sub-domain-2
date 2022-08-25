@@ -30,6 +30,7 @@ export class IdentotronScene extends Scene {
       { text: "Woman", fn: () => this.chooseGender("woman") },
       { text: "Transman", fn: () => this.chooseGender("transman") },
       { text: "Transwoman", fn: () => this.chooseGender("transwoman") },
+      { text: "Remmy", fn: () => this.chooseGender("remmy") },
       { text: "Never mind…", fn: () => this.start() },
     ]
   }

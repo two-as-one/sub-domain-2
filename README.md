@@ -32,6 +32,14 @@ Why is the player on this planet? Are they stranded? Why do they go on expeditio
 - magic is mostly biological, potions and transformations exists but fireball doesn't
 
 ## TODO
-- upgrade to lit dev
+
 - character / deck view
-- update palette to nickelodeon palette
+- implement radiation
+  - when radiation maxes out, player mutates
+  - choose a mutation from 2 or 3 random option
+    - mutations can increase/decrease size
+    - multiply / remove parts
+    - other?
+  - radiation is green!
+- implement submissiveness
+- add lust stat for player?

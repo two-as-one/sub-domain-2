@@ -9,24 +9,13 @@ module.exports = {
         exclude: /node_modules/,
         use: ["babel-loader"],
       },
-
-      {
-        test: /\.(scss|css|sass)$/,
-        use: [
-          {
-            loader: "style-loader",
-          },
-          {
-            loader: "css-loader",
-          },
-          {
-            loader: "sass-loader",
-          },
-        ],
-      },
       {
         test: /\.yaml$/,
         use: [{ loader: "yaml-loader" }],
+      },
+      {
+        test: /\.(png|jpg|jpeg|gif)$/,
+        loader: "file-loader",
       },
     ],
   },

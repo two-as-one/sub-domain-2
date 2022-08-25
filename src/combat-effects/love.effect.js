@@ -1,5 +1,4 @@
 import { Effect } from "./_effect"
-import { html } from "lit"
 import CONFIG from "../config.yaml"
 
 export class LoveEffect extends Effect {
@@ -15,12 +14,15 @@ export class LoveEffect extends Effect {
 
   get description() {
     if (this.value === this.config.value) {
-      return html`<span class="effect pink">Deal ${this.value} love. </span>`
+      return `Deal <span class="pink"> ${this.value} love</span>.`
     } else {
-      return html`<span class="effect pink"
-        >Deal <strong>${this.value}</strong> love.
-      </span>`
+      return `Deal <strong>${this.value}</strong>
+        <span class="pink">love</span>. `
     }
+  }
+
+  get color() {
+    return "pink"
   }
 
   apply(target) {

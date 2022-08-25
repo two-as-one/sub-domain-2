@@ -20,7 +20,7 @@ export class EntityAI extends Entity {
 
   chooseIntention() {
     const action = this.game.chance.pickone(
-      this.intentions.filter(intention => intention.applies()),
+      this.intentions.filter((intention) => intention.applies())
     )
 
     if (!action) {
@@ -38,10 +38,10 @@ export class Intention {
   }
 
   get description() {
-    return this.effects.map(effect => effect.description)
+    return this.effects.map((effect) => effect.description).join(" ")
   }
 
   apply(target) {
-    return this.effects.forEach(effect => effect.apply(target))
+    return this.effects.forEach((effect) => effect.apply(target))
   }
 }

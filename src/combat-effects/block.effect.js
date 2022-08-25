@@ -1,5 +1,4 @@
 import { Effect } from "./_effect"
-import { html } from "lit"
 import CONFIG from "../config.yaml"
 
 export class BlockEffect extends Effect {
@@ -8,7 +7,11 @@ export class BlockEffect extends Effect {
   }
 
   get description() {
-    return html`<span class="effect">Block ${this.value} pain. </span>`
+    return `Block <span class="blue"> ${this.value} pain</span>.`
+  }
+
+  get color() {
+    return "blue"
   }
 
   apply() {
@@ -16,6 +19,6 @@ export class BlockEffect extends Effect {
   }
 
   get tooltips() {
-    return [CONFIG.tooltips.block, CONFIG.tooltips.turnDuration]
+    return [CONFIG.tooltips.block]
   }
 }

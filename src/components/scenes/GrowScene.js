@@ -20,17 +20,22 @@ export class GrowScene extends Scene {
       { text: `Ignore it.`, fn: () => this.game.setScene("expedition") },
     ]
 
-    this.deck = this.game.player.createDeck()
     this.viableCards = this.deck.cards
       .filter((card) => card.type === "body")
       .filter((card) => card.level < card.levels.length - 1)
   }
 
-  onEnterUse() {
+  async onEnterUse() {
     if (this.viableCards.length) {
       this.chat.type("Which body part do you want to use it on?")
-      this.hand.cards = [...this.viableCards]
-      this.hand.show()
+
+      this.deck.showHand = true
+
+      while (this.viableCards.length) {
+        await new Promise((r) => setTimeout(r, 250))
+        const card = this.viableCards.shift()
+        this.deck.draw(card)
+      }
       this.options = []
     } else {
       this.chat.type("You don't have any applicable body parts.")
@@ -43,7 +48,7 @@ export class GrowScene extends Scene {
     card.level += 1
     this.chat.type(`Your ${previousName} became ${card.title}!`)
     this.options = [{ text: `…`, fn: () => this.game.setScene("expedition") }]
-    this.hand.hide()
+    this.showHand = false
 
     set(
       "player.deck",
